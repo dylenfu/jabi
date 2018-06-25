@@ -16,5 +16,6 @@ package com.dylenfu.eth.abi;/*
 
 */
 
-public class method {
+public class Method {
+
 }
