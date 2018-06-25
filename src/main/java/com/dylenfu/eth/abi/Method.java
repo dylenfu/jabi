@@ -18,4 +18,30 @@ package com.dylenfu.eth.abi;/*
 
 public class Method {
 
+    private String name;
+    private Boolean Const;
+
+    // private list<Argument> Inputs;
+    // private list<Argument> Outputs;
+
+    public Method(String name, Boolean aConst) {
+        this.name = name;
+        Const = aConst;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Boolean getConst() {
+        return Const;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setConst(Boolean aConst) {
+        Const = aConst;
+    }
 }

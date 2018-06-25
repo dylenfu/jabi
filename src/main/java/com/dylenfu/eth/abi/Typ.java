@@ -18,22 +18,7 @@ package com.dylenfu.eth.abi;/*
 
 import java.lang.reflect.AnnotatedElement;
 
-//const (
-//        IntTy byte = iota
-//        UintTy
-//        BoolTy
-//        StringTy
-//        SliceTy
-//        ArrayTy
-//        AddressTy
-//        FixedBytesTy
-//        BytesTy
-//        HashTy
-//        FixedPointTy
-//        FunctionTy
-//        )
-
-enum TyKind {
+enum TypEnum {
     IntTy, UintTy, BoolTy, StringTy, SliceTy, ArrayTy, AddressTy, FixedBytesTy, BytesTy, HashTy, FixedPointTy, FunctionTy
 }
 
