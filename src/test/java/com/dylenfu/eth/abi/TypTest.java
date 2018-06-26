@@ -17,24 +17,22 @@
 */
 package com.dylenfu.eth.abi;
 
-import static org.junit.Assert.*;
+import org.apache.log4j.*;
 import org.junit.Test;
 
 public class TypTest {
+
+    static Logger logger = Logger.getLogger(TypTest.class);
 
     @Test
     public void enumTest() {
         TypEnum t = TypEnum.IntTy;
 
-        switch (t) {
-            case IntTy:
-                assertEquals(t, TypEnum.IntTy);
+        PropertyConfigurator.configure("/Users/fukun/projects/gohome/src/github.com/dylenfu/jabi/log4j.properties");
 
-            case UintTy:
-                assertEquals(t, TypEnum.UintTy);
+        Typ typ = new Typ();
+        typ.getKind();
 
-            default:
-                break;
-        }
+        logger.error("--------hahha------");
     }
 }

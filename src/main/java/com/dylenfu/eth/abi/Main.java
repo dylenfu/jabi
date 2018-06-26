@@ -1,4 +1,4 @@
-package com.dylenfu.eth.abi;/*
+/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,15 +15,16 @@ package com.dylenfu.eth.abi;/*
   limitations under the License.
 
 */
+package com.dylenfu.eth.abi;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
-public class Instance {
+public class Main {
 
-    static Logger logger = Logger.getLogger(Instance.class);
+    static Logger logger = Logger.getLogger(Main.class);
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         PropertyConfigurator.configure("log4j.properties");
 
         logger.debug("------haha");
