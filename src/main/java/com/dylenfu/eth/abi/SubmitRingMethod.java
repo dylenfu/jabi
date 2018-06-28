@@ -16,5 +16,17 @@ package com.dylenfu.eth.abi;/*
 
 */
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import org.apache.log4j.Logger;
+import org.ethereum.solidity.Abi;
+
 public class SubmitRingMethod {
+
+    @Inject
+    Logger logger;
+
+    @Inject
+    @Named("implAbi")
+    Abi abi;
 }
