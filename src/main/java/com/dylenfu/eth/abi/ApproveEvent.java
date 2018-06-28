@@ -1,4 +1,4 @@
-/*
+package com.dylenfu.eth.abi;/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,22 +15,6 @@
   limitations under the License.
 
 */
-package com.dylenfu.eth.abi;
 
-import com.google.inject.Injector;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
-import com.google.inject.Guice;
-
-public class Main {
-
-    public static void main(String[] args) {
-        Logger logger = Logger.getLogger(Main.class);
-        PropertyConfigurator.configure("log4j.properties");
-
-        Injector injector = Guice.createInjector(new PersistenceModule(logger));
-        TransferEvent transfer = injector.getInstance(TransferEvent.class);
-
-        transfer.unpack();
-    }
+public class ApproveEvent {
 }
