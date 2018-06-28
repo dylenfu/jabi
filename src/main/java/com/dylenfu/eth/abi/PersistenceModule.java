@@ -1,4 +1,4 @@
-package com.dylenfu.eth.abi;/*
+/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,6 +15,7 @@ package com.dylenfu.eth.abi;/*
   limitations under the License.
 
 */
+package com.dylenfu.eth.abi;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
@@ -43,6 +44,11 @@ public class PersistenceModule extends AbstractModule {
 
         Abi erc20Abi = Abi.fromJson(erc20AbiStr);
         bind(Abi.class).annotatedWith(Names.named("erc20Abi")).toInstance(erc20Abi);
+
+
+        logger.debug("---------start");
+        logger.debug(implAbiStr);
+        logger.debug("---------end");
 
         Abi implAbi = Abi.fromJson(implAbiStr);
         bind(Abi.class).annotatedWith(Names.named("implAbi")).toInstance(implAbi);
