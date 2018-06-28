@@ -1,4 +1,4 @@
-/*
+package com.dylenfu.eth.abi;/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,16 +15,23 @@
   limitations under the License.
 
 */
-package com.dylenfu.eth.abi;
 
-import org.junit.Test;
-import static org.junit.Assert.*;
+import com.google.inject.AbstractModule;
+import org.apache.log4j.Logger;
 
-public class MethodTest {
+public class PersistenceModule extends AbstractModule {
 
-    @Test
-    public void getNameTest() {
-        Method m = new Method("haha", false);
-        assertEquals(m.getName(), "haha");
+    private Logger logger;
+
+    public PersistenceModule(Logger logger) {
+        this.logger = logger;
     }
+
+    @Override
+    protected void configure() {
+        Transfer transfer = new Transfer();
+        bind(Transfer.class).toInstance(transfer);
+        bind(Logger.class).toInstance(this.logger);
+    }
+
 }

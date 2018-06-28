@@ -26,13 +26,7 @@ public class TypTest {
 
     @Test
     public void enumTest() {
-        TypEnum t = TypEnum.IntTy;
-
         PropertyConfigurator.configure("/Users/fukun/projects/gohome/src/github.com/dylenfu/jabi/log4j.properties");
-
-        Typ typ = new Typ();
-        typ.getKind();
-
         logger.error("--------hahha------");
     }
 }

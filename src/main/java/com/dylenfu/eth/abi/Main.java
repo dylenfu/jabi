@@ -17,16 +17,20 @@
 */
 package com.dylenfu.eth.abi;
 
+import com.google.inject.Injector;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
+import com.google.inject.Guice;
 
 public class Main {
 
-    static Logger logger = Logger.getLogger(Main.class);
-
     public static void main(String[] args) {
+        Logger logger = Logger.getLogger(Main.class);
         PropertyConfigurator.configure("log4j.properties");
 
-        logger.debug("------haha");
+        Injector injector = Guice.createInjector(new PersistenceModule(logger));
+        Transfer transfer = injector.getInstance(Transfer.class);
+
+        transfer.unpack();
     }
 }
