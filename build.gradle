@@ -19,6 +19,8 @@ dependencies {
     compile 'org.ethereum:ethereumj-core:1.8.0-RELEASE'
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
 
+    // akka cluster
+    compile group: 'com.typesafe.akka', name: 'akka-cluster_2.12', version: '2.5.13'
     // akka actor
     compile group: 'com.typesafe.akka', name: 'akka-actor_2.12', version: '2.5.13'
     testCompile group: 'com.typesafe.akka', name: 'akka-testkit_2.12', version: '2.5.13'
