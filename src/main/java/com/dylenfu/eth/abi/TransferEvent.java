@@ -25,7 +25,7 @@ import org.ethereum.solidity.Abi;
 import org.ethereum.solidity.Abi.Entry;
 import java.math.BigInteger;
 
-class TransferEvent {
+public class TransferEvent {
     @Inject
     Logger logger;
 

@@ -45,8 +45,8 @@ public class PersistenceModule extends AbstractModule {
         Abi erc20Abi = Abi.fromJson(erc20AbiStr);
         bind(Abi.class).annotatedWith(Names.named("erc20Abi")).toInstance(erc20Abi);
 
-        Abi implAbi = Abi.fromJson(implAbiStr);
-        bind(Abi.class).annotatedWith(Names.named("implAbi")).toInstance(implAbi);
+//        Abi implAbi = Abi.fromJson(implAbiStr);
+//        bind(Abi.class).annotatedWith(Names.named("implAbi")).toInstance(implAbi);
 
         TransferEvent transfer = new TransferEvent();
         bind(TransferEvent.class).toInstance(transfer);

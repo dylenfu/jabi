@@ -15,8 +15,10 @@
   limitations under the License.
 
 */
-package com.dylenfu.eth.abi;
+package com.dylenfu.eth.extractor;
 
+import com.dylenfu.eth.abi.PersistenceModule;
+import com.dylenfu.eth.abi.TransferEvent;
 import com.google.inject.Injector;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
