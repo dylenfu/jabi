@@ -39,7 +39,7 @@ dependencies {
     compile group: 'com.typesafe.akka', name: 'akka-persistence_2.12', version: '2.5.13'
 }
 
-mainClassName = 'com.dylenfu.eth.extractor.Main'
+mainClassName = 'com.dylenfu.lightcone.Main'
 
 run {
 

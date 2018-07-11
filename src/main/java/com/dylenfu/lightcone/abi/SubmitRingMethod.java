@@ -1,4 +1,4 @@
-/*
+package com.dylenfu.lightcone.abi;/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,18 +15,18 @@
   limitations under the License.
 
 */
-package com.dylenfu.eth.abi;
 
-import org.apache.log4j.*;
-import org.junit.Test;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import org.apache.log4j.Logger;
+import org.ethereum.solidity.Abi;
 
-public class TypTest {
+public class SubmitRingMethod {
 
-    static Logger logger = Logger.getLogger(TypTest.class);
+    @Inject
+    Logger logger;
 
-    @Test
-    public void enumTest() {
-        PropertyConfigurator.configure("/Users/fukun/projects/gohome/src/github.com/dylenfu/jabi/log4j.properties");
-        logger.error("--------hahha------");
-    }
+    @Inject
+    @Named("implAbi")
+    Abi abi;
 }

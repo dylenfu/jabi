@@ -7,3 +7,4 @@ settings.gradle
 src/main/resources/
 build/
 out/
+lightcone.iml

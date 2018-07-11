@@ -15,7 +15,7 @@
   limitations under the License.
 
 */
-package com.dylenfu.eth.abi;
+package com.dylenfu.lightcone.abi;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;

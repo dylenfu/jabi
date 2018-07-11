@@ -16,7 +16,7 @@
 
 */
 
-package com.dylenfu.eth.abi;
+package com.dylenfu.lightcone.abi;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;

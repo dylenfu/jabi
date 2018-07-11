@@ -1,4 +1,4 @@
-package com.dylenfu.eth.abi;/*
+/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,18 +15,24 @@ package com.dylenfu.eth.abi;/*
   limitations under the License.
 
 */
+package com.dylenfu.lightcone;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
+import com.dylenfu.lightcone.abi.PersistenceModule;
+import com.dylenfu.lightcone.abi.TransferEvent;
+import com.google.inject.Injector;
 import org.apache.log4j.Logger;
-import org.ethereum.solidity.Abi;
+import org.apache.log4j.PropertyConfigurator;
+import com.google.inject.Guice;
 
-public class SubmitRingMethod {
+public class Main {
 
-    @Inject
-    Logger logger;
+    public static void main(String[] args) {
+        Logger logger = Logger.getLogger(Main.class);
+        PropertyConfigurator.configure("log4j.properties");
 
-    @Inject
-    @Named("implAbi")
-    Abi abi;
+        Injector injector = Guice.createInjector(new PersistenceModule(logger));
+        TransferEvent transfer = injector.getInstance(TransferEvent.class);
+
+        transfer.unpack();
+    }
 }
