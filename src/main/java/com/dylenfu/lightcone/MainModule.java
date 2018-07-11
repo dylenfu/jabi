@@ -52,6 +52,8 @@ public class MainModule extends AbstractModule {
         PropertyConfigurator.configure("log4j.properties");
 
         bind(Logger.class).toInstance(logger);
+        bind(StaticConfig.class).toInstance(staticConfig);
+        bind(NodeConfig.class).toInstance(nodeConfig);
 
         // load mysql
         DataSource dataSource = new PooledDataSource();

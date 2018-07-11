@@ -18,6 +18,7 @@
 
 package com.dylenfu.lightcone;
 
+import com.dylenfu.lightcone.config.StaticConfig;
 import com.google.inject.Inject;
 
 import org.apache.log4j.Logger;
@@ -27,7 +28,12 @@ public class Deployer {
     @Inject
     Logger logger;
 
+    @Inject
+    StaticConfig staticConfig;
+
     public void deploy() {
         logger.debug("----------hahahhahahha");
+        logger.debug(staticConfig.config.origin());
+        logger.debug(staticConfig.config.getString("db.driver"));
     }
 }

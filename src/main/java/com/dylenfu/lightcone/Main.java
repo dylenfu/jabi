@@ -25,9 +25,11 @@ import com.google.inject.Injector;
 public class Main {
 
     public static void main(String[] args) {
-        StaticConfig staticConfig = new StaticConfig();
+        StaticConfig staticConfig = new StaticConfig("/Users/fukun/projects/javahome/github.com/dylenfu/lightcone/src/main/resources/local.conf");
         NodeConfig nodeConfig = new NodeConfig();
         Injector injector = Guice.createInjector(new MainModule(staticConfig, nodeConfig));
+
+        injector.getInstance(StaticConfig.class).parse();
         injector.getInstance(Deployer.class).deploy();
     }
 }

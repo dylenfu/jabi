@@ -22,14 +22,19 @@ import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
 import java.io.File;
-import java.io.FileReader;
 
 public class StaticConfig {
 
-    public Config parse(String path) {
+    public Config config;
+    private String path;
+
+    public StaticConfig(String path) {
+        this.path = path;
+    }
+
+    public void parse() {
         File file = new File(path);
-        Config config = ConfigFactory.parseFile(file);
-        return config;
+        this.config =  ConfigFactory.parseFile(file);
     }
 
 }
