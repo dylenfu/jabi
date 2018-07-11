@@ -15,19 +15,8 @@
   limitations under the License.
 
 */
-package com.dylenfu.lightcone;
 
-import com.dylenfu.lightcone.config.NodeConfig;
-import com.dylenfu.lightcone.config.StaticConfig;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+package com.dylenfu.lightcone.persistence;
 
-public class Main {
-
-    public static void main(String[] args) {
-        StaticConfig staticConfig = new StaticConfig();
-        NodeConfig nodeConfig = new NodeConfig();
-        Injector injector = Guice.createInjector(new MainModule(staticConfig, nodeConfig));
-        injector.getInstance(Deployer.class).deploy();
-    }
+public class Block {
 }

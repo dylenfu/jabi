@@ -15,19 +15,19 @@
   limitations under the License.
 
 */
+
 package com.dylenfu.lightcone;
 
-import com.dylenfu.lightcone.config.NodeConfig;
-import com.dylenfu.lightcone.config.StaticConfig;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
+import com.google.inject.Inject;
 
-public class Main {
+import org.apache.log4j.Logger;
 
-    public static void main(String[] args) {
-        StaticConfig staticConfig = new StaticConfig();
-        NodeConfig nodeConfig = new NodeConfig();
-        Injector injector = Guice.createInjector(new MainModule(staticConfig, nodeConfig));
-        injector.getInstance(Deployer.class).deploy();
+public class Deployer {
+
+    @Inject
+    Logger logger;
+
+    public void deploy() {
+        logger.debug("----------hahahhahahha");
     }
 }

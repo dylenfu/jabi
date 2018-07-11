@@ -26,7 +26,7 @@ public class TypTest {
 
     @Test
     public void enumTest() {
-        PropertyConfigurator.configure("/Users/fukun/projects/gohome/src/github.com/dylenfu/jabi/log4j.properties");
+        PropertyConfigurator.configure("/Users/fukun/projects/gohome/src/github.com/dylenfu/lightcone/log4j.properties");
         logger.error("--------hahha------");
     }
 }
