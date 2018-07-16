@@ -4,7 +4,6 @@ gradle/
 gradlew
 gradlew.bat
 settings.gradle
-src/main/resources/
 build/
 out/
 lightcone.iml
