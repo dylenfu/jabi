@@ -31,14 +31,12 @@ import org.apache.log4j.PropertyConfigurator;
 import org.ethereum.solidity.Abi;
 
 import javax.sql.DataSource;
+import java.io.*;
 
 public class MainModule extends AbstractModule {
 
     private StaticConfig staticConfig;
     private NodeConfig nodeConfig;
-
-    private final String protocolStr = "0x781870080C8C24a2FD6882296c49c837b06A65E6";
-    private final String delegateStr = "0xC533531f4f291F036513f7Abb41bfcCc62475486";
 
     public MainModule(StaticConfig staticConfig, NodeConfig nodeConfig) {
         this.staticConfig = staticConfig;
@@ -50,25 +48,26 @@ public class MainModule extends AbstractModule {
         // load logger
         Logger logger = Logger.getLogger(MainModule.class);
         PropertyConfigurator.configure("log4j.properties");
-
         bind(Logger.class).toInstance(logger);
+
+        // load config
         bind(StaticConfig.class).toInstance(staticConfig);
         bind(NodeConfig.class).toInstance(nodeConfig);
 
-        // load mysql
-        DataSource dataSource = new PooledDataSource();
-
         // load erc20 abi
-//        Abi erc20Abi = Abi.fromJson(erc20AbiStr);
-//        bind(Abi.class).annotatedWith(Names.named("erc20Abi")).toInstance(erc20Abi);
+        String erc20AbiStr = staticConfig.config.getString("abi.erc20");
+        Abi erc20Abi = Abi.fromJson(erc20AbiStr);
+        bind(Abi.class).annotatedWith(Names.named("erc20Abi")).toInstance(erc20Abi);
+        bind(TransferEvent.class).toInstance(new TransferEvent());
 
         // load loopring abi
 //        Abi implAbi = Abi.fromJson(implAbiStr);
 //        bind(Abi.class).annotatedWith(Names.named("implAbi")).toInstance(implAbi);
 
-        //bind(TransferEvent.class).toInstance(new TransferEvent());
-
         // load deployer
-        bind(Deployer.class).toInstance(new Deployer());
+        //bind(Deployer.class).toInstance(new Deployer());
+
+        // load mysql
+        // DataSource dataSource = new PooledDataSource(staticConfig.config.getString("db.driver"), staticConfig.config.getString("db.url"), staticConfig.config.getString("db.username"), staticConfig.config.getString("db.password"));
     }
 }

@@ -32,7 +32,6 @@ public class Deployer {
     StaticConfig staticConfig;
 
     public void deploy() {
-        logger.debug("----------hahahhahahha");
         logger.debug(staticConfig.config.origin());
         logger.debug(staticConfig.config.getString("db.driver"));
     }

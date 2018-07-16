@@ -17,6 +17,7 @@
 */
 package com.dylenfu.lightcone;
 
+import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
 import com.google.inject.Guice;
@@ -26,10 +27,14 @@ public class Main {
 
     public static void main(String[] args) {
         StaticConfig staticConfig = new StaticConfig("/Users/fukun/projects/javahome/github.com/dylenfu/lightcone/src/main/resources/local.conf");
+        staticConfig.parse();
         NodeConfig nodeConfig = new NodeConfig();
+
         Injector injector = Guice.createInjector(new MainModule(staticConfig, nodeConfig));
 
         injector.getInstance(StaticConfig.class).parse();
-        injector.getInstance(Deployer.class).deploy();
+        //injector.getInstance(Deployer.class).deploy();
+
+        injector.getInstance(TransferEvent.class).unpack();
     }
 }
