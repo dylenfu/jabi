@@ -18,5 +18,19 @@
 
 package com.dylenfu.lightcone.abi;
 
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import org.apache.log4j.Logger;
+import org.ethereum.solidity.Abi;
+
 public class ApproveEvent {
+
+    @Inject
+    Logger logger;
+
+    @Inject
+    @Named("erc20Abi")
+    Abi abi;
+
+
 }
