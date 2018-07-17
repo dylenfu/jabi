@@ -18,8 +18,29 @@ package com.dylenfu.lightcone.abi;/*
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
+import org.apache.commons.collections4.Predicate;
 import org.apache.log4j.Logger;
 import org.ethereum.solidity.Abi;
+import org.spongycastle.util.encoders.Hex;
+
+import java.math.BigInteger;
+import java.util.List;
+
+/*
+type SubmitRingMethodInputs struct {
+	AddressList        [][4]common.Address `fieldName:"addressList" fieldId:"0"`   // owner,tokenS, wallet, authAddress
+	UintArgsList       [][6]*big.Int       `fieldName:"uintArgsList" fieldId:"1"`  // amountS, amountB, validSince (second),validUntil (second), lrcFee, rateAmountS.
+	Uint8ArgsList      [][1]uint8          `fieldName:"uint8ArgsList" fieldId:"2"` // marginSplitPercentageList
+	BuyNoMoreThanBList []bool              `fieldName:"buyNoMoreThanAmountBList" fieldId:"3"`
+	VList              []uint8             `fieldName:"vList" fieldId:"4"`
+	RList              [][32]byte          `fieldName:"rList" fieldId:"5"`
+	SList              [][32]byte          `fieldName:"sList" fieldId:"6"`
+	FeeRecipient       common.Address      `fieldName:"feeRecipient" fieldId:"7"`
+	FeeSelections      uint16              `fieldName:"feeSelections" fieldId:"8"`
+	Protocol           common.Address
+	FeeReceipt         common.Address
+}
+* */
 
 public class SubmitRingMethod {
 
@@ -29,4 +50,83 @@ public class SubmitRingMethod {
     @Inject
     @Named("implAbi")
     Abi abi;
+
+    private Abi.Function method;
+
+    private byte[] input;
+
+    public void setInput(byte[] input) {
+        this.input = input;
+    }
+
+    private byte[][] addressList;
+    private BigInteger[][] uintArgsList;
+    private BigInteger[][] uint8ArgsList;
+    private boolean[] buyNoMoreThanBList;
+    private int[] vList;
+    private byte[][] rList;
+    private byte[][] sList;
+    private byte[] feeRecipient;
+    private int feeSelections;
+
+    public byte[][] getAddressList() {
+        return addressList;
+    }
+
+    public BigInteger[][] getUintArgsList() {
+        return uintArgsList;
+    }
+
+    public BigInteger[][] getUint8ArgsList() {
+        return uint8ArgsList;
+    }
+
+    public boolean[] getBuyNoMoreThanBList() {
+        return buyNoMoreThanBList;
+    }
+
+    public int[] getvList() {
+        return vList;
+    }
+
+    public byte[][] getrList() {
+        return rList;
+    }
+
+    public byte[][] getsList() {
+        return sList;
+    }
+
+    public byte[] getFeeRecipient() {
+        return feeRecipient;
+    }
+
+    public int getFeeSelections() {
+        return feeSelections;
+    }
+
+    Predicate<Abi.Function> methodName = x -> x.name.equals("submitRing");
+
+    private void beforeUnpack() throws Exception {
+        if (this.method == null) {
+            this.method = abi.findFunction(methodName);
+        }
+    }
+
+    private void afterUnpack() throws Exception {
+
+    }
+
+    public void unpack() throws Exception {
+        beforeUnpack();
+//        List list = event.decode(data, topics);
+//
+//        this.from = (byte[])list.get(0);
+//        this.to = (byte[])list.get(1);
+//        this.value = (BigInteger) list.get(2);
+//
+//        logger.debug("transfer event, from:" + Hex.toHexString((byte[])(this.from)) +
+//                " to:" + Hex.toHexString((byte[])(this.to)) +
+//                " value:" + this.value.toString());
+    }
 }
