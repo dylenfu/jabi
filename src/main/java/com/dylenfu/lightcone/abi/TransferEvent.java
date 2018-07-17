@@ -28,6 +28,14 @@ import java.util.List;
 import org.apache.commons.collections4.Predicate;
 import org.spongycastle.util.encoders.Hex;
 
+/* transfer event in erc20.sol
+event Transfer(
+    address indexed from,
+    address indexed to,
+    uint256 value
+);
+*/
+
 public class TransferEvent {
     @Inject
     Logger logger;
@@ -36,38 +44,28 @@ public class TransferEvent {
     @Named("erc20Abi")
     Abi abi;
 
-    // event in erc20.sol
-    /*
-    event Transfer(
-        address indexed from,
-        address indexed to,
-        uint256 value
-    );
-    */
+    private Abi.Event event;
 
     private byte[][] topics;
     private byte[] data;
 
-    public TransferEvent() {
-
-    }
-    
-    public TransferEvent(Hex[] topics, Hex data) {
-//        Hex.
-//        for (Hex topic:topics) {
-//            this.topics.
-//        }
-    }
-
-    private String from;
-    private String to;
+    private byte[] from;
+    private byte[] to;
     private BigInteger value;
 
-    public String getFrom() {
+    public void setTopics(byte[][] topics) {
+        this.topics = topics;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
+
+    public byte[] getFrom() {
         return from;
     }
 
-    public String getTo() {
+    public byte[] getTo() {
         return to;
     }
 
@@ -75,53 +73,28 @@ public class TransferEvent {
         return value;
     }
 
-    public void unpack() {
-        //需要去除0x前缀
-        byte[] content = Hex.decode("000000000000000000000000000000000000000000000000016345785d8a0000");
-        byte[] topic1 = Hex.decode("ddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef");
-        byte[] topic2 = Hex.decode("0000000000000000000000001b978a1d302335a6f2ebe4b8823b5e17c3c84135");
-        byte[] topic3 = Hex.decode("000000000000000000000000b1018949b241d76a1ab2094f473e9befeabb5ead");
+    public void unpack() throws Exception {
+        beforeUnpack();
+        List list = event.decode(data, topics);
 
-        byte[][] topics = {topic1, topic2, topic3};
-        for (Abi.Entry entry:abi) {
-            System.out.println("---------" + entry.name);
-            System.out.println("---------" + entry.type.toString() + ","+ entry.formatSignature());
-        }
-
-        Abi.Event event  = abi.findEvent(eventName);
-
-        logger.debug("----name-----" + event.name);
-        logger.debug("----type-----" + event.type.toString());
-
-        List list = event.decode(content, topics);
-
-        this.from = Hex.toHexString((byte[])(list.get(0)));
-        this.to = Hex.toHexString((byte[])(list.get(1)));
+        this.from = (byte[])list.get(0);
+        this.to = (byte[])list.get(1);
         this.value = (BigInteger) list.get(2);
 
-        for(Object item:list) {
-            if (item instanceof byte[]) {
-                logger.debug(Hex.toHexString((byte[])(item)));
-            } else if (item instanceof BigInteger) {
-                logger.debug(item);
-            } else {
-                logger.debug("-------3");
-            }
-        }
-        //this.from = list.get(0);
-
-        //logger.debug(list.toArray().length);
-
-//        logger.debug(list.get(0));
-//        logger.debug(list.get(1));
-//        logger.debug(list.get(2));
-
-//        Entry entry = abi.get(0);
-//        for (Entry.Param input : entry.inputs) {
-//            logger.debug(input);
-//            logger.debug("-----hahahahhah");
-//        }
+        logger.debug("transfer event, from:" + Hex.toHexString((byte[])(this.from)) +
+                " to:" + Hex.toHexString((byte[])(this.to)) +
+                " value:" + this.value.toString());
     }
 
     Predicate<Abi.Event> eventName = x -> x.name.equals("Transfer");
+
+    private void beforeUnpack() throws Exception {
+        if (this.event == null) {
+            this.event = abi.findEvent(eventName);
+        }
+    }
+
+    private void afterUnpack() throws Exception {
+
+    }
 }

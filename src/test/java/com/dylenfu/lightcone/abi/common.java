@@ -1,4 +1,4 @@
-/*
+package com.dylenfu.lightcone.abi;/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,18 +15,8 @@
   limitations under the License.
 
 */
-package com.dylenfu.lightcone.abi;
 
-import org.apache.log4j.*;
-import org.junit.Test;
+public class common {
 
-public class TypTest {
 
-    static Logger logger = Logger.getLogger(TypTest.class);
-
-    @Test
-    public void enumTest() {
-        PropertyConfigurator.configure("/Users/fukun/projects/gohome/src/github.com/dylenfu/lightcone/log4j.properties");
-        logger.error("--------hahha------");
-    }
 }
