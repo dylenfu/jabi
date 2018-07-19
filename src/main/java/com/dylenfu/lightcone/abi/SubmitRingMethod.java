@@ -23,6 +23,7 @@ import org.apache.log4j.Logger;
 import org.ethereum.solidity.Abi;
 import org.spongycastle.util.encoders.Hex;
 
+import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.util.List;
 
@@ -67,7 +68,7 @@ public class SubmitRingMethod {
     private byte[][] rList;
     private byte[][] sList;
     private byte[] feeRecipient;
-    private int feeSelections;
+    private BigInteger feeSelections;
 
     public byte[][] getAddressList() {
         return addressList;
@@ -101,7 +102,7 @@ public class SubmitRingMethod {
         return feeRecipient;
     }
 
-    public int getFeeSelections() {
+    public BigInteger getFeeSelections() {
         return feeSelections;
     }
 
@@ -119,6 +120,38 @@ public class SubmitRingMethod {
 
     public void unpack() throws Exception {
         beforeUnpack();
+        List list = method.decode(input);
+
+        Object[] objects = (Object[])list.get(0);
+        System.out.printf("objects length:%d\r\n", objects.length);
+
+        Object object = objects[0];
+        if (object == null) {
+            System.out.println("----object is null");
+        }
+
+        if (object instanceof String) {
+            System.out.println("---string");
+        } else if (object instanceof byte[]) {
+            System.out.println("---byte[]");
+        } else if (object instanceof BigInteger) {
+            System.out.println("---big integer");
+        } else if (object instanceof Double) {
+            System.out.println("---double");
+        } else if (object instanceof Boolean) {
+            System.out.println("---boolean");
+        } else if (object instanceof Float) {
+            System.out.println("---float");
+        } else if (object instanceof Array) {
+            System.out.println("---array");
+        } else {
+            System.out.println("--- cann't find any type");
+        }
+
+        feeSelections = (BigInteger)list.get(8);
+        logger.debug(feeSelections.toString());
+
+
 //        List list = event.decode(data, topics);
 //
 //        this.from = (byte[])list.get(0);

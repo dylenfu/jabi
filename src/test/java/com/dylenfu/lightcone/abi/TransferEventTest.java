@@ -17,47 +17,19 @@
 */
 package com.dylenfu.lightcone.abi;
 
-import com.dylenfu.lightcone.config.NodeConfig;
-import com.dylenfu.lightcone.config.StaticConfig;
 import com.google.inject.*;
-import com.google.inject.name.Names;
 import org.apache.log4j.*;
-import org.ethereum.solidity.Abi;
 import org.junit.Test;
 import org.spongycastle.util.encoders.Hex;
 
-import java.math.BigInteger;
-
-import static org.junit.Assert.assertEquals;
+import static junit.framework.TestCase.assertEquals;
 
 public class TransferEventTest {
 
     @Test
     public void unpackTest() {
 
-        Injector injector =  Guice.createInjector(new Module() {
-            @Override
-            public void configure(Binder binder) {
-                StaticConfig staticConfig = new StaticConfig("/Users/fukun/projects/javahome/github.com/dylenfu/lightcone/src/main/resources/local.conf");
-                staticConfig.parse();
-                NodeConfig nodeConfig = new NodeConfig();
-
-                // load logger
-                Logger logger = Logger.getLogger(TransferEventTest.class);
-                PropertyConfigurator.configure("log4j.properties");
-                binder.bind(Logger.class).toInstance(logger);
-
-                // load config
-                binder.bind(StaticConfig.class).toInstance(staticConfig);
-                binder.bind(NodeConfig.class).toInstance(nodeConfig);
-
-                // load erc20 abi
-                String erc20AbiStr = staticConfig.config.getString("abi.erc20");
-                Abi erc20Abi = Abi.fromJson(erc20AbiStr);
-                binder.bind(Abi.class).annotatedWith(Names.named("erc20Abi")).toInstance(erc20Abi);
-                binder.bind(TransferEvent.class).toInstance(new TransferEvent());
-            }
-        });
+        Injector injector =  Common.getInjector();
 
         byte[] data = Hex.decode("000000000000000000000000000000000000000000000000016345785d8a0000");
         byte[][] topics = {
