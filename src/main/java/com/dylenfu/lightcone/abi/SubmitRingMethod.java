@@ -24,7 +24,6 @@ import org.apache.log4j.Logger;
 import org.ethereum.solidity.Abi;
 import org.spongycastle.util.encoders.Hex;
 
-import java.lang.reflect.Array;
 import java.math.BigInteger;
 import java.util.List;
 
