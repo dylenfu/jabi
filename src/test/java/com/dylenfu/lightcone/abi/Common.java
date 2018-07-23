@@ -59,6 +59,7 @@ public class Common {
                 Abi implAbi = Abi.fromJson(implAbiStr);
                 binder.bind(Abi.class).annotatedWith(Names.named("implAbi")).toInstance(implAbi);
                 binder.bind(SubmitRingMethod.class).toInstance(new SubmitRingMethod());
+                binder.bind(CancelOrderMethod.class).toInstance(new CancelOrderMethod());
             }
         });
 

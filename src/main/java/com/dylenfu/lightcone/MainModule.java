@@ -19,6 +19,7 @@
 package com.dylenfu.lightcone;
 
 import com.dylenfu.lightcone.abi.ApproveMethod;
+import com.dylenfu.lightcone.abi.CancelOrderMethod;
 import com.dylenfu.lightcone.abi.SubmitRingMethod;
 import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
@@ -68,6 +69,7 @@ public class MainModule extends AbstractModule {
         Abi implAbi = Abi.fromJson(implAbiStr);
         bind(Abi.class).annotatedWith(Names.named("implAbi")).toInstance(implAbi);
         bind(SubmitRingMethod.class).toInstance(new SubmitRingMethod());
+        bind(CancelOrderMethod.class).toInstance(new CancelOrderMethod());
 
         // load deployer
         //bind(Deployer.class).toInstance(new Deployer());

@@ -1,4 +1,4 @@
-package com.dylenfu.lightcone.abi;/*
+/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,6 +15,7 @@ package com.dylenfu.lightcone.abi;/*
   limitations under the License.
 
 */
+package com.dylenfu.lightcone.abi;
 
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -119,47 +120,12 @@ public class SubmitRingMethod {
     }
 
     public void unpack() throws Exception {
+        logger.debug("-------submit ring before unpack");
         beforeUnpack();
+        logger.debug("-------submit ring after unpack");
         List list = method.decode(input);
 
         Object[] objects = (Object[])list.get(0);
         logger.debug("objects length:" + objects.length);
-
-        Object object = objects[0];
-        if (object == null) {
-            logger.debug("----object is null");
-        }
-
-        if (object instanceof String) {
-            logger.debug("---string");
-        } else if (object instanceof byte[]) {
-            logger.debug("---byte[]");
-        } else if (object instanceof BigInteger) {
-            logger.debug("---big integer");
-        } else if (object instanceof Double) {
-            logger.debug("---double");
-        } else if (object instanceof Boolean) {
-            logger.debug("---boolean");
-        } else if (object instanceof Float) {
-            logger.debug("---float");
-        } else if (object instanceof Array) {
-            logger.debug("---array");
-        } else {
-            logger.debug("--- cann't find any type");
-        }
-
-        feeSelections = (BigInteger)list.get(8);
-        logger.debug(feeSelections.toString());
-
-
-//        List list = event.decode(data, topics);
-//
-//        this.from = (byte[])list.get(0);
-//        this.to = (byte[])list.get(1);
-//        this.value = (BigInteger) list.get(2);
-//
-//        logger.debug("transfer event, from:" + Hex.toHexString((byte[])(this.from)) +
-//                " to:" + Hex.toHexString((byte[])(this.to)) +
-//                " value:" + this.value.toString());
     }
 }
