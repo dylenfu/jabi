@@ -123,29 +123,29 @@ public class SubmitRingMethod {
         List list = method.decode(input);
 
         Object[] objects = (Object[])list.get(0);
-        System.out.printf("objects length:%d\r\n", objects.length);
+        logger.debug("objects length:" + objects.length);
 
         Object object = objects[0];
         if (object == null) {
-            System.out.println("----object is null");
+            logger.debug("----object is null");
         }
 
         if (object instanceof String) {
-            System.out.println("---string");
+            logger.debug("---string");
         } else if (object instanceof byte[]) {
-            System.out.println("---byte[]");
+            logger.debug("---byte[]");
         } else if (object instanceof BigInteger) {
-            System.out.println("---big integer");
+            logger.debug("---big integer");
         } else if (object instanceof Double) {
-            System.out.println("---double");
+            logger.debug("---double");
         } else if (object instanceof Boolean) {
-            System.out.println("---boolean");
+            logger.debug("---boolean");
         } else if (object instanceof Float) {
-            System.out.println("---float");
+            logger.debug("---float");
         } else if (object instanceof Array) {
-            System.out.println("---array");
+            logger.debug("---array");
         } else {
-            System.out.println("--- cann't find any type");
+            logger.debug("--- cann't find any type");
         }
 
         feeSelections = (BigInteger)list.get(8);

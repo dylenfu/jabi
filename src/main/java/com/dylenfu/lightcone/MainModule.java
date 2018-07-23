@@ -18,6 +18,7 @@
 
 package com.dylenfu.lightcone;
 
+import com.dylenfu.lightcone.abi.ApproveMethod;
 import com.dylenfu.lightcone.abi.SubmitRingMethod;
 import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
@@ -58,6 +59,7 @@ public class MainModule extends AbstractModule {
         Abi erc20Abi = Abi.fromJson(erc20AbiStr);
         bind(Abi.class).annotatedWith(Names.named("erc20Abi")).toInstance(erc20Abi);
         bind(TransferEvent.class).toInstance(new TransferEvent());
+        bind(ApproveMethod.class).toInstance(new ApproveMethod());
 
         // load loopring impl abi
         // 必须过滤掉method&event之间的 {\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},
