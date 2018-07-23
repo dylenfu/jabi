@@ -1,4 +1,4 @@
-package com.dylenfu.lightcone.abi;/*
+/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,6 +15,7 @@ package com.dylenfu.lightcone.abi;/*
   limitations under the License.
 
 */
+package com.dylenfu.lightcone.abi;
 
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
