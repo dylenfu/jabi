@@ -21,9 +21,10 @@ dependencies {
     compile 'org.ethereum:ethereumj-core:1.8.0-RELEASE'
     compile group: 'com.google.inject', name: 'guice', version: '4.1.0'
 
-    // db
+    // mysql
     compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
     compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+    compile group: 'org.nutz', name: 'nutz', version: '1.r.66'
 
     // akka cluster
     compile group: 'com.typesafe.akka', name: 'akka-cluster_2.12', version: '2.5.13'
@@ -48,4 +49,11 @@ mainClassName = 'com.dylenfu.lightcone.Main'
 
 run {
 
+}
+
+test {
+    testLogging {
+        // Show that tests are run in the command-line output
+        events 'started', 'passed'
+    }
 }

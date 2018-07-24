@@ -24,6 +24,7 @@ import com.dylenfu.lightcone.abi.SubmitRingMethod;
 import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
+import com.dylenfu.lightcone.persistence.Person;
 import com.dylenfu.lightcone.persistence.UserMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
@@ -37,6 +38,9 @@ import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.ethereum.solidity.Abi;
+import org.nutz.dao.Dao;
+import org.nutz.dao.impl.NutDao;
+import org.nutz.dao.impl.SimpleDataSource;
 
 import javax.sql.DataSource;
 
@@ -80,7 +84,7 @@ public class MainModule extends AbstractModule {
         // load deployer
         //bind(Deployer.class).toInstance(new Deployer());
 
-        // load mysql
+        // load mybatis
         String driver = staticConfig.config.getString("db.driver");
         String url = staticConfig.config.getString("db.url");
         String username = staticConfig.config.getString("db.username");
@@ -92,5 +96,16 @@ public class MainModule extends AbstractModule {
         configuration.addMapper(UserMapper.class);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
         bind(SqlSessionFactory.class).toInstance(sqlSessionFactory);
+
+        // load nutz
+        SimpleDataSource simpleDataSource = new SimpleDataSource();
+        simpleDataSource.setJdbcUrl(url);
+        simpleDataSource.setUsername(username);
+        simpleDataSource.setPassword(password);
+        // 创建一个NutDao实例,在真实项目中, NutDao通常由ioc托管, 使用注入的方式获得.
+        Dao dao = new NutDao(dataSource);
+        // 创建表
+        dao.create(Person.class, false); // false的含义是,如果表已经存在,就不要删除重建了.
+        bind(Dao.class).toInstance(dao);
     }
 }
