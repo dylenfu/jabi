@@ -17,7 +17,6 @@
 */
 package com.dylenfu.lightcone;
 
-import com.dylenfu.lightcone.abi.SubmitRingMethod;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
 import com.dylenfu.lightcone.persistence.User;
@@ -27,7 +26,6 @@ import com.google.inject.Injector;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
-import org.spongycastle.util.encoders.Hex;
 
 public class Main {
 
@@ -53,18 +51,18 @@ public class Main {
 //            injector.getInstance(Logger.class).debug(e.getMessage());
 //        }
 
-        SqlSessionFactory sqlSessionFactory = injector.getInstance(SqlSessionFactory.class);
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        // test case 2
-        try {
-            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
-            User user1 = userMapper.getUserById(1);
-            injector.getInstance(Logger.class).debug(user1.toString());
-
-            User user2 = userMapper.getUserByName("tom");
-            injector.getInstance(Logger.class).debug(user2.toString());
-        } finally {
-            sqlSession.close();
-        }
+//        SqlSessionFactory sqlSessionFactory = injector.getInstance(SqlSessionFactory.class);
+//        SqlSession sqlSession = sqlSessionFactory.openSession();
+//        // test case 2
+//        try {
+//            UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
+//            User user1 = userMapper.getUserById(1);
+//            injector.getInstance(Logger.class).debug(user1.toString());
+//
+//            User user2 = userMapper.getUserByName("tom");
+//            injector.getInstance(Logger.class).debug(user2.toString());
+//        } finally {
+//            sqlSession.close();
+//        }
     }
 }

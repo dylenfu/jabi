@@ -15,8 +15,9 @@
   limitations under the License.
 
 */
-package com.dylenfu.lightcone.abi;
+package com.dylenfu.lightcone;
 
+import com.dylenfu.lightcone.abi.TransferEvent;
 import com.google.inject.*;
 import org.apache.log4j.*;
 import org.junit.Test;
@@ -50,5 +51,4 @@ public class TransferEventTest {
         assertEquals(Hex.toHexString((byte[])(transfer.getTo())), "b1018949b241d76a1ab2094f473e9befeabb5ead");
         assertEquals(transfer.getValue().toString(), "100000000000000000");
     }
-
 }

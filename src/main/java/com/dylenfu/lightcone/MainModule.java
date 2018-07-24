@@ -24,7 +24,6 @@ import com.dylenfu.lightcone.abi.SubmitRingMethod;
 import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
-import com.dylenfu.lightcone.persistence.UserMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;

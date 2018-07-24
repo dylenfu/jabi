@@ -16,8 +16,9 @@
 
 */
 
-package com.dylenfu.lightcone.abi;
+package com.dylenfu.lightcone;
 
+import com.dylenfu.lightcone.abi.ApproveMethod;
 import com.google.inject.Injector;
 import org.apache.log4j.Logger;
 import org.junit.Test;
