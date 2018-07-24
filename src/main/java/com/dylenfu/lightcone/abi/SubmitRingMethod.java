@@ -25,6 +25,7 @@ import org.ethereum.solidity.Abi;
 import org.spongycastle.util.encoders.Hex;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -60,25 +61,25 @@ public class SubmitRingMethod {
         this.input = input;
     }
 
-    private byte[][] addressList;
-    private BigInteger[][] uintArgsList;
-    private BigInteger[][] uint8ArgsList;
+    private List<byte[]> addressList;
+    private List<BigInteger[]> uintArgsList;
+    private List<BigInteger[]> uint8ArgsList;
     private boolean[] buyNoMoreThanBList;
-    private int[] vList;
-    private byte[][] rList;
-    private byte[][] sList;
+    private List<BigInteger> vList;
+    private List<byte[]> rList;
+    private List<byte[]> sList;
     private byte[] feeRecipient;
     private BigInteger feeSelections;
 
-    public byte[][] getAddressList() {
+    public List<byte[]> getAddressList() {
         return addressList;
     }
 
-    public BigInteger[][] getUintArgsList() {
+    public List<BigInteger[]> getUintArgsList() {
         return uintArgsList;
     }
 
-    public BigInteger[][] getUint8ArgsList() {
+    public List<BigInteger[]> getUint8ArgsList() {
         return uint8ArgsList;
     }
 
@@ -86,15 +87,15 @@ public class SubmitRingMethod {
         return buyNoMoreThanBList;
     }
 
-    public int[] getvList() {
+    public List<BigInteger> getvList() {
         return vList;
     }
 
-    public byte[][] getrList() {
+    public List<byte[]> getrList() {
         return rList;
     }
 
-    public byte[][] getsList() {
+    public List<byte[]> getsList() {
         return sList;
     }
 
@@ -119,12 +120,18 @@ public class SubmitRingMethod {
     }
 
     public void unpack() throws Exception {
-        logger.debug("-------submit ring before unpack");
         beforeUnpack();
-        logger.debug("-------submit ring after unpack");
+
+        for (Abi.Entry.Param param : method.inputs) {
+            logger.debug("submit ring method input:" + param.name + " "+ param.type);
+        }
+
+        logger.debug("------before decode");
+        logger.debug("input " + Hex.toHexString(input));
         List list = method.decode(input);
 
-        Object[] objects = (Object[])list.get(0);
-        logger.debug("objects length:" + objects.length);
+        //logger.debug("submit ring method feeReceipt " + Hex.toHexString((byte[]) list.get(7)));
+        logger.debug("submit ring method objects length:" + list.get(0).toString());
+        //Object[] objects = (Object[])list.get(0);
     }
 }

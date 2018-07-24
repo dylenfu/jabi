@@ -81,9 +81,9 @@ public class TransferEvent {
         this.to = (byte[])list.get(1);
         this.value = (BigInteger) list.get(2);
 
-        logger.debug("transfer event, from:" + Hex.toHexString((byte[])(this.from)) +
-                " to:" + Hex.toHexString((byte[])(this.to)) +
-                " value:" + this.value.toString());
+        logger.debug("transfer event from " + Hex.toHexString((byte[])(this.from)));
+        logger.debug("transfer event to " + Hex.toHexString((byte[])(this.to)));
+        logger.debug("transfer event value " + this.value.toString());
     }
 
     Predicate<Abi.Event> eventName = x -> x.name.equals("Transfer");
