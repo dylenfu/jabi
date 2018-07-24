@@ -23,6 +23,7 @@ dependencies {
 
     // db
     compile group: 'org.mybatis', name: 'mybatis', version: '3.4.6'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
 
     // akka cluster
     compile group: 'com.typesafe.akka', name: 'akka-cluster_2.12', version: '2.5.13'

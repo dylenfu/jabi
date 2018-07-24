@@ -24,15 +24,21 @@ import com.dylenfu.lightcone.abi.SubmitRingMethod;
 import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
+import com.dylenfu.lightcone.persistence.UserMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
+import org.apache.ibatis.mapping.Environment;
+import org.apache.ibatis.session.Configuration;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.ibatis.transaction.TransactionFactory;
+import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.ethereum.solidity.Abi;
 
 import javax.sql.DataSource;
-import java.io.*;
 
 public class MainModule extends AbstractModule {
 
@@ -75,6 +81,15 @@ public class MainModule extends AbstractModule {
         //bind(Deployer.class).toInstance(new Deployer());
 
         // load mysql
-        // DataSource dataSource = new PooledDataSource(staticConfig.config.getString("db.driver"), staticConfig.config.getString("db.url"), staticConfig.config.getString("db.username"), staticConfig.config.getString("db.password"));
+        String driver = staticConfig.config.getString("db.driver");
+        String url = staticConfig.config.getString("db.url");
+        String username = staticConfig.config.getString("db.username");
+        String password = staticConfig.config.getString("db.password");
+        DataSource dataSource = new PooledDataSource(driver, url, username, password);
+        TransactionFactory transactionFactory = new JdbcTransactionFactory();
+        Environment environment = new Environment("development", transactionFactory, dataSource);
+        Configuration configuration = new Configuration(environment);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
+        bind(SqlSessionFactory.class).toInstance(sqlSessionFactory);
     }
 }

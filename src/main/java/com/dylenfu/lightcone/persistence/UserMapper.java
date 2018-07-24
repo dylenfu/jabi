@@ -18,5 +18,14 @@
 
 package com.dylenfu.lightcone.persistence;
 
-public class Block {
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
+
+public interface UserMapper {
+
+    @Select("SELECT * FROM lpr_users WHERE id = #{id}")
+    User getUserById(@Param("id") int id);
+
+    @Select("SELECT * FROM lpr_users WHERE name = #{name}")
+    User getUserByName(@Param("name") String name);
 }
