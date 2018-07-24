@@ -35,7 +35,7 @@ public class MybatisTest {
         Injector injector = Common.getInjector();
         SqlSessionFactory sqlSessionFactory = injector.getInstance(SqlSessionFactory.class);
         SqlSession sqlSession = sqlSessionFactory.openSession();
-        // test case 2
+
         try {
             UserMapper userMapper = sqlSession.getMapper(UserMapper.class);
             User user1 = userMapper.getUserById(1);

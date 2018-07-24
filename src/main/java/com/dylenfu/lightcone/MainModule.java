@@ -24,6 +24,7 @@ import com.dylenfu.lightcone.abi.SubmitRingMethod;
 import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
+import com.dylenfu.lightcone.persistence.UserMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
@@ -88,6 +89,7 @@ public class MainModule extends AbstractModule {
         TransactionFactory transactionFactory = new JdbcTransactionFactory();
         Environment environment = new Environment("development", transactionFactory, dataSource);
         Configuration configuration = new Configuration(environment);
+        configuration.addMapper(UserMapper.class);
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
         bind(SqlSessionFactory.class).toInstance(sqlSessionFactory);
     }
