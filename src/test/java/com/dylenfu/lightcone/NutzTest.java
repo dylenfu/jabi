@@ -22,11 +22,12 @@ import com.dylenfu.lightcone.persistence.Person;
 import com.google.inject.Injector;
 import org.apache.log4j.Logger;
 import org.junit.Test;
-import org.nutz.dao.Cnd;
-import org.nutz.dao.Condition;
-import org.nutz.dao.Dao;
+import org.nutz.dao.*;
+import org.nutz.dao.util.Daos;
 
 import java.util.List;
+
+import static org.nutz.json.JsonFormat.Function.actived;
 
 public class NutzTest {
 
@@ -68,6 +69,7 @@ public class NutzTest {
         }
 
         // 注意: 这里limit pageNumber从1开始，0代表取所有数据，官方已放弃limit(n)的写法，但该jar包仍然可以使用
+        // For example:> "SELECT * FROM lpr_person  WHERE age>10 AND id IN (4,7,8,9,11,12,13) ORDER BY id DESC   LIMIT 3, 3 "
         int[] ids = {4, 7, 8, 9, 11, 12, 13};
         Condition cnd = Cnd.where("age", ">", 10).and("id", "in", ids).limit(2, 3).desc("id");
         List<Person> list2 = dao.query(Person.class, cnd);
@@ -76,4 +78,45 @@ public class NutzTest {
         }
     }
 
+    @Test
+    public void updateObjectTest() {
+        Injector injector = Common.getInjector();
+        Dao dao = injector.getInstance(Dao.class);
+        Logger logger = injector.getInstance(Logger.class);
+
+        // For example:> "UPDATE lpr_person SET name='dylenfu',age=32  WHERE id=4"
+        Person person = dao.fetch(Person.class, 4);
+        person.setAge(32);
+        int affectedRows = dao.update(person);
+        logger.debug("person age " + person.getAge() + " affected rows " + affectedRows);
+    }
+
+    @Test
+    public void updateFieldTest() {
+        Injector injector = Common.getInjector();
+        Dao dao = injector.getInstance(Dao.class);
+        Logger logger = injector.getInstance(Logger.class);
+
+        // For example:> "UPDATE lpr_person SET age=31  WHERE id=4"
+        Person person = dao.fetch(Person.class, 4);
+        person.setAge(31);
+        int affectedRows = dao.update(person, "^age$");
+        logger.debug("person age " + person.getAge() + " affected rows " + affectedRows);
+    }
+
+    @Test
+    public void fieldFilterTest() {
+        Injector injector = Common.getInjector();
+        Dao dao = injector.getInstance(Dao.class);
+        Logger logger = injector.getInstance(Logger.class);
+
+        // For example:> "UPDATE lpr_person SET age=31  WHERE id=4"
+        Person person = dao.fetch(Person.class, 4);
+        person.setName("dylenfu");
+        person.setAge(31);
+
+        // ignore null, only fields of name and age updated
+        int affectedRows = Daos.ext(dao, FieldFilter.create(Person.class, "^name|age$")).update(person);
+        logger.debug("person age " + person.getAge() + " affected rows " + affectedRows);
+    }
 }
