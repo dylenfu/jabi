@@ -27,8 +27,6 @@ import org.nutz.dao.util.Daos;
 
 import java.util.List;
 
-import static org.nutz.json.JsonFormat.Function.actived;
-
 public class NutzTest {
 
     @Test
@@ -118,5 +116,20 @@ public class NutzTest {
         // ignore null, only fields of name and age updated
         int affectedRows = Daos.ext(dao, FieldFilter.create(Person.class, "^name|age$")).update(person);
         logger.debug("person age " + person.getAge() + " affected rows " + affectedRows);
+    }
+
+    @Test
+    public void updateConditionTest() {
+        Injector injector = Common.getInjector();
+        Dao dao = injector.getInstance(Dao.class);
+        Logger logger = injector.getInstance(Logger.class);
+
+        // For example:> "UPDATE lpr_person SET deleted=true  WHERE id>0"
+        int affectedRows1 = dao.update(Person.class, Chain.make("deleted", true), Cnd.where("id", ">", 0));
+        logger.debug("affected rows " + affectedRows1);
+
+        // For example:> "UPDATE lpr_person SET age=age+1,deleted=false  WHERE id>0"
+        int affectedRows2 = dao.update(Person.class, Chain.makeSpecial("age", "+1").add("deleted", false), Cnd.where("id", ">", 0));
+        logger.debug("affected rows " + affectedRows2);
     }
 }

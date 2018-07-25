@@ -31,6 +31,8 @@ public class Person {
 
     @Column
     private int age;
+    @Column
+    private boolean deleted;
 
     public int getId() {
         return id;
@@ -56,12 +58,21 @@ public class Person {
         this.age = age;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
     @Override
     public String toString() {
         return "Person{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", deleted=" + deleted +
                 '}';
     }
 }
