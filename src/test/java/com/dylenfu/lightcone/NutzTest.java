@@ -22,7 +22,11 @@ import com.dylenfu.lightcone.persistence.Person;
 import com.google.inject.Injector;
 import org.apache.log4j.Logger;
 import org.junit.Test;
+import org.nutz.dao.Cnd;
+import org.nutz.dao.Condition;
 import org.nutz.dao.Dao;
+
+import java.util.List;
 
 public class NutzTest {
 
@@ -45,7 +49,31 @@ public class NutzTest {
         Dao dao = injector.getInstance(Dao.class);
         Logger logger = injector.getInstance(Logger.class);
 
-        Person person = dao.fetch(Person.class, "tom");
-        logger.debug("-------person id " + person.getId());
+        Person tom = dao.fetch(Person.class, "tom");
+        logger.debug("tom " + tom.toString());
+
+        Person jane = dao.fetch(Person.class, 7);
+        logger.debug("jane " + jane.toString());
     }
+
+    @Test
+    public void conditionTest() {
+        Injector injector = Common.getInjector();
+        Dao dao = injector.getInstance(Dao.class);
+        Logger logger = injector.getInstance(Logger.class);
+
+        List<Person> list1 = dao.query(Person.class, Cnd.where("id", ">", 0).where("name", "like", "%j%"));
+        for(Person person: list1) {
+            logger.debug(person.toString());
+        }
+
+        // 注意: 这里limit pageNumber从1开始，0代表取所有数据，官方已放弃limit(n)的写法，但该jar包仍然可以使用
+        int[] ids = {4, 7, 8, 9, 11, 12, 13};
+        Condition cnd = Cnd.where("age", ">", 10).and("id", "in", ids).limit(2, 3).desc("id");
+        List<Person> list2 = dao.query(Person.class, cnd);
+        for (Person person: list2) {
+            logger.debug(person.toString());
+        }
+    }
+
 }
