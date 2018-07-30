@@ -16,44 +16,59 @@
 
 */
 
-package com.dylenfu.lightcone.persistence;
+package com.dylenfu.lightcone.persistence.entity;
 
-public class User {
+public class UserEntity {
 
     private int id;
+
     private String name;
+
     private int age;
 
-    public int getId() {
-        return id;
+    public UserEntity() {
+
     }
 
-    public String getName() {
-        return name;
+    public UserEntity(int id, String name, int age) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
     }
 
     public int getAge() {
         return age;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getName() {
+
+        return name;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
     public String toString() {
-        return "User{" +
+        return "UserEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
                 '}';
     }
+
 }

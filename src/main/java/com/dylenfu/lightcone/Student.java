@@ -16,12 +16,15 @@
 
 */
 
-package com.dylenfu.lightcone.persistence;
+package com.dylenfu.lightcone;
 
-import org.nutz.dao.entity.annotation.*;
+import org.nutz.dao.entity.annotation.Column;
+import org.nutz.dao.entity.annotation.Id;
+import org.nutz.dao.entity.annotation.Name;
+import org.nutz.dao.entity.annotation.Table;
 
-@Table("lpr_person")
-public class Person {
+@Table("t_student_${cid}")
+class Student {
 
     @Id
     private int id;
@@ -31,8 +34,6 @@ public class Person {
 
     @Column
     private int age;
-    @Column
-    private boolean deleted;
 
     public int getId() {
         return id;
@@ -58,21 +59,12 @@ public class Person {
         this.age = age;
     }
 
-    public boolean isDeleted() {
-        return deleted;
-    }
-
-    public void setDeleted(boolean deleted) {
-        this.deleted = deleted;
-    }
-
     @Override
     public String toString() {
-        return "Person{" +
+        return "Student{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
-                ", deleted=" + deleted +
                 '}';
     }
 }

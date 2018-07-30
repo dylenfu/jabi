@@ -19,13 +19,8 @@ package com.dylenfu.lightcone;
 
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
-import com.dylenfu.lightcone.persistence.User;
-import com.dylenfu.lightcone.persistence.UserMapper;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.log4j.Logger;
 
 public class Main {
 

@@ -24,8 +24,7 @@ import com.dylenfu.lightcone.abi.SubmitRingMethod;
 import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
-import com.dylenfu.lightcone.persistence.Person;
-import com.dylenfu.lightcone.persistence.UserMapper;
+import com.dylenfu.lightcone.persistence.mapper.UserEntityMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.apache.ibatis.datasource.pooled.PooledDataSource;
@@ -41,6 +40,8 @@ import org.ethereum.solidity.Abi;
 import org.nutz.dao.Dao;
 import org.nutz.dao.impl.NutDao;
 import org.nutz.dao.impl.SimpleDataSource;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.sql.DataSource;
 
@@ -81,31 +82,12 @@ public class MainModule extends AbstractModule {
         bind(SubmitRingMethod.class).toInstance(new SubmitRingMethod());
         bind(CancelOrderMethod.class).toInstance(new CancelOrderMethod());
 
+        // load mybatis-spring
+        ApplicationContext context = new ClassPathXmlApplicationContext(staticConfig.config.getString("springMybatis.xmlPath"));
+        UserEntityMapper userEntityMapper = context.getBean(UserEntityMapper.class);
+        bind(UserEntityMapper.class).toInstance(userEntityMapper);
+
         // load deployer
         //bind(Deployer.class).toInstance(new Deployer());
-
-        // load mybatis
-        String driver = staticConfig.config.getString("db.driver");
-        String url = staticConfig.config.getString("db.url");
-        String username = staticConfig.config.getString("db.username");
-        String password = staticConfig.config.getString("db.password");
-        DataSource dataSource = new PooledDataSource(driver, url, username, password);
-        TransactionFactory transactionFactory = new JdbcTransactionFactory();
-        Environment environment = new Environment("development", transactionFactory, dataSource);
-        Configuration configuration = new Configuration(environment);
-        configuration.addMapper(UserMapper.class);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(configuration);
-        bind(SqlSessionFactory.class).toInstance(sqlSessionFactory);
-
-        // load nutz
-        SimpleDataSource simpleDataSource = new SimpleDataSource();
-        simpleDataSource.setJdbcUrl(url);
-        simpleDataSource.setUsername(username);
-        simpleDataSource.setPassword(password);
-        // 创建一个NutDao实例,在真实项目中, NutDao通常由ioc托管, 使用注入的方式获得.
-        Dao dao = new NutDao(dataSource);
-        // 创建表
-        dao.create(Person.class, false); // false的含义是,如果表已经存在,就不要删除重建了.
-        bind(Dao.class).toInstance(dao);
     }
 }

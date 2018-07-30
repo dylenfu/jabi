@@ -16,16 +16,13 @@
 
 */
 
-package com.dylenfu.lightcone.persistence;
+package com.dylenfu.lightcone.persistence.mapper;
 
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.dylenfu.lightcone.persistence.entity.UserEntity;
 
-public interface UserMapper {
+public interface UserEntityMapper {
 
-    @Select("SELECT * FROM lpr_users WHERE id = #{id}")
-    User getUserById(@Param("id") int id);
+    int insertOne(UserEntity user);
 
-    @Select("SELECT * FROM lpr_users WHERE name = #{name}")
-    User getUserByName(@Param("name") String name);
+    UserEntity selectByPk(int id);
 }
