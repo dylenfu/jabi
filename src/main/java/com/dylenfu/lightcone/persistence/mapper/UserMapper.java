@@ -20,9 +20,13 @@ package com.dylenfu.lightcone.persistence.mapper;
 
 import com.dylenfu.lightcone.persistence.entity.UserEntity;
 
+import java.util.List;
+
 public interface UserMapper {
 
     int insertOne(UserEntity user);
 
     UserEntity selectByPk(int id);
+
+    List<UserEntity> selectByAge(int age);
 }

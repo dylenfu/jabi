@@ -24,10 +24,12 @@ import com.google.inject.Injector;
 import org.apache.log4j.Logger;
 import org.junit.Test;
 
+import java.util.List;
+
 public class MybatisSpringTest {
 
     @Test
-    public void simpleTest() {
+    public void simpleInsertTest() {
         Injector injector = Common.getInjector();
         Logger logger = injector.getInstance(Logger.class);
         UserMapper mapper = injector.getInstance(UserMapper.class);
@@ -40,5 +42,17 @@ public class MybatisSpringTest {
 
         logger.debug(entity1.toString());
         logger.debug(entity2.toString());
+    }
+
+    @Test
+    public void simpleSelectTest() {
+        Injector injector = Common.getInjector();
+        Logger logger = injector.getInstance(Logger.class);
+        UserMapper mapper = injector.getInstance(UserMapper.class);
+
+        List<UserEntity> list = mapper.selectByAge(3);
+        for (UserEntity user: list) {
+            logger.debug(user.toString());
+        }
     }
 }
