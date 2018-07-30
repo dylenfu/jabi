@@ -71,7 +71,7 @@ public class MainModule extends AbstractModule {
         bind(CancelOrderMethod.class).toInstance(new CancelOrderMethod());
 
         // load mybatis-spring
-        ApplicationContext context = new ClassPathXmlApplicationContext(staticConfig.config.getString("springMybatis.xmlPath"));
+        ApplicationContext context = new ClassPathXmlApplicationContext(staticConfig.config.getString("db.config"));
         UserMapper userMapper = context.getBean(UserMapper.class);
         bind(UserMapper.class).toInstance(userMapper);
 

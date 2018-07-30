@@ -48,7 +48,7 @@
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSourceResource"/>
-        <property name="configLocation" value="classpath:mybatis.xml"></property>
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
         <property name="typeAliasesPackage" value="com.dylenfu.lightcone.persistence.entity"></property>
         <property name="mapperLocations" value="classpath*:mapper/*.xml"></property>
     </bean>
