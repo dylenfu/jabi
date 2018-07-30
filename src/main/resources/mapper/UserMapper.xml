@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.dylenfu.lightcone.persistence.mapper.UserEntityMapper">
+<mapper namespace="com.dylenfu.lightcone.persistence.mapper.UserMapper">
 
-    <insert id="insertOne" parameterType="com.dylenfu.lightcone.persistence.entity.UserEntity">
-        INSERT INTO user(id, name,age) VALUE(#{id},#{name},#{age})
+    <insert id="insertOne" parameterType="com.dylenfu.lightcone.persistence.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO user(name,age) VALUE(#{name},#{age})
     </insert>
 
     <select id="selectByPk" resultType="com.dylenfu.lightcone.persistence.entity.UserEntity" parameterType="java.lang.Integer">

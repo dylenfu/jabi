@@ -1,4 +1,4 @@
-package com.dylenfu.lightcone;/*
+/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -16,8 +16,10 @@ package com.dylenfu.lightcone;/*
 
 */
 
+package com.dylenfu.lightcone;
+
 import com.dylenfu.lightcone.persistence.entity.UserEntity;
-import com.dylenfu.lightcone.persistence.mapper.UserEntityMapper;
+import com.dylenfu.lightcone.persistence.mapper.UserMapper;
 import com.google.inject.Injector;
 import org.apache.log4j.Logger;
 import org.junit.Test;
@@ -28,11 +30,15 @@ public class MybatisSpringTest {
     public void simpleTest() {
         Injector injector = Common.getInjector();
         Logger logger = injector.getInstance(Logger.class);
-        UserEntityMapper mapper = injector.getInstance(UserEntityMapper.class);
+        UserMapper mapper = injector.getInstance(UserMapper.class);
 
-        mapper.insertOne(new UserEntity(1, "xx", 11));
-        mapper.insertOne(new UserEntity(2, "xxzzz", 11));
-        logger.debug(mapper.selectByPk(1));
-        logger.debug(mapper.selectByPk(2));
+        UserEntity entity1 = new UserEntity("aaa6", 21);
+        UserEntity entity2 = new UserEntity("bbb6", 22);
+
+        mapper.insertOne(entity1);
+        mapper.insertOne(entity2);
+
+        logger.debug(entity1.toString());
+        logger.debug(entity2.toString());
     }
 }

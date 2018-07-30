@@ -24,26 +24,14 @@ import com.dylenfu.lightcone.abi.SubmitRingMethod;
 import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
-import com.dylenfu.lightcone.persistence.mapper.UserEntityMapper;
+import com.dylenfu.lightcone.persistence.mapper.UserMapper;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
-import org.apache.ibatis.datasource.pooled.PooledDataSource;
-import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.session.Configuration;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.ibatis.transaction.TransactionFactory;
-import org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.ethereum.solidity.Abi;
-import org.nutz.dao.Dao;
-import org.nutz.dao.impl.NutDao;
-import org.nutz.dao.impl.SimpleDataSource;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import javax.sql.DataSource;
 
 public class MainModule extends AbstractModule {
 
@@ -84,8 +72,8 @@ public class MainModule extends AbstractModule {
 
         // load mybatis-spring
         ApplicationContext context = new ClassPathXmlApplicationContext(staticConfig.config.getString("springMybatis.xmlPath"));
-        UserEntityMapper userEntityMapper = context.getBean(UserEntityMapper.class);
-        bind(UserEntityMapper.class).toInstance(userEntityMapper);
+        UserMapper userMapper = context.getBean(UserMapper.class);
+        bind(UserMapper.class).toInstance(userMapper);
 
         // load deployer
         //bind(Deployer.class).toInstance(new Deployer());

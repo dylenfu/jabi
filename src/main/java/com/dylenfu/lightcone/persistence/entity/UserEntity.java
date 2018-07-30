@@ -30,8 +30,7 @@ public class UserEntity {
 
     }
 
-    public UserEntity(int id, String name, int age) {
-        this.id = id;
+    public UserEntity(String name, int age) {
         this.name = name;
         this.age = age;
     }

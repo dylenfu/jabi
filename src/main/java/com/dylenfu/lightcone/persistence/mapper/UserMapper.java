@@ -20,7 +20,7 @@ package com.dylenfu.lightcone.persistence.mapper;
 
 import com.dylenfu.lightcone.persistence.entity.UserEntity;
 
-public interface UserEntityMapper {
+public interface UserMapper {
 
     int insertOne(UserEntity user);
 
