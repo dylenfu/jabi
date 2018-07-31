@@ -34,8 +34,8 @@ public class MybatisSpringTest {
         Logger logger = injector.getInstance(Logger.class);
         UserMapper mapper = injector.getInstance(UserMapper.class);
 
-        UserEntity entity1 = new UserEntity("aaa6", 21);
-        UserEntity entity2 = new UserEntity("bbb6", 22);
+        UserEntity entity1 = new UserEntity("aaa7", 21);
+        UserEntity entity2 = new UserEntity("bbb7", 22);
 
         mapper.insertOne(entity1);
         mapper.insertOne(entity2);

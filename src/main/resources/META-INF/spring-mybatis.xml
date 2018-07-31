@@ -4,6 +4,8 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <import resource="classpath:META-INF/sharding-jdbc.xml" />
+
     <!--配置数据源-->
     <bean id="dataSourceResource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
           destroy-method="close">
@@ -83,9 +85,9 @@
         <!--<property name="dataSource" ref="dataSourceResource"/>-->
         <!--使用多个数据源-->
         <property name="dataSource" ref="wholeDataSource"/>
-        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <property name="configLocation" value="classpath:META-INF/mybatis-config.xml"></property>
         <property name="typeAliasesPackage" value="com.dylenfu.lightcone.persistence.entity"></property>
-        <property name="mapperLocations" value="classpath*:mapper/*.xml"></property>
+        <property name="mapperLocations" value="classpath*:META-INF/mapper/*.xml"></property>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.dylenfu.lightcone.persistence.mapper"></property>
