@@ -21,16 +21,18 @@ package com.dylenfu.lightcone.persistence.entity;
 public class UserEntity {
 
     private int id;
-
     private String name;
-
     private int age;
+    private String market;
+    private String address;
 
     public UserEntity() {}
 
-    public UserEntity(String name, int age) {
+    public UserEntity(String name, int age, String market, String address) {
         this.name = name;
         this.age = age;
+        this.market = market;
+        this.address = address;
     }
 
     public int getAge() {
@@ -55,13 +57,30 @@ public class UserEntity {
         this.id = id;
     }
 
+    public String getMarket() {
+        return market;
+    }
+
+    public void setMarket(String market) {
+        this.market = market;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", age=" + age +
+                ", market='" + market + '\'' +
+                ", address='" + address + '\'' +
                 '}';
     }
-
 }

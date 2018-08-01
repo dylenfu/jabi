@@ -4,7 +4,7 @@
 <mapper namespace="com.dylenfu.lightcone.persistence.mapper.UserMapper">
 
     <insert id="insertOne" parameterType="com.dylenfu.lightcone.persistence.entity.UserEntity" useGeneratedKeys="true" keyProperty="id">
-        INSERT INTO user(name,age) VALUE(#{name},#{age})
+        INSERT INTO user(name,age,market,address) VALUE(#{name},#{age},#{market},#{address})
     </insert>
 
     <select id="selectByMarket" resultType="com.dylenfu.lightcone.persistence.entity.UserEntity" parameterType="java.lang.String">

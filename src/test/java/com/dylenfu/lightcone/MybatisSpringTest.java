@@ -34,14 +34,20 @@ public class MybatisSpringTest {
         Logger logger = injector.getInstance(Logger.class);
         UserMapper mapper = injector.getInstance(UserMapper.class);
 
-        UserEntity entity1 = new UserEntity("aaa7", 21);
-        UserEntity entity2 = new UserEntity("bbb7", 22);
+        UserEntity entity1 = new UserEntity("tom", 21, "eth", "a5");
+        UserEntity entity2 = new UserEntity("tom", 21, "eth", "b5");
+        UserEntity entity3 = new UserEntity("red", 22, "lrc", "a2");
+        UserEntity entity4 = new UserEntity("red", 22, "lrc", "b2");
 
         mapper.insertOne(entity1);
         mapper.insertOne(entity2);
+        mapper.insertOne(entity3);
+        mapper.insertOne(entity4);
 
         logger.debug(entity1.toString());
         logger.debug(entity2.toString());
+        logger.debug(entity3.toString());
+        logger.debug(entity4.toString());
     }
 
     @Test

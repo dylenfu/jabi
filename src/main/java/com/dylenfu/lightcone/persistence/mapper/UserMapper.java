@@ -25,8 +25,7 @@ import java.util.List;
 public interface UserMapper {
 
     int insertOne(UserEntity user);
-
-    UserEntity selectByPk(int id);
-
+    List<UserEntity> selectByMarket(String market);
+    List<UserEntity> selectByAddress(String address);
     List<UserEntity> selectByAge(int age);
 }

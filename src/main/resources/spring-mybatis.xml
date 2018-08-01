@@ -1,18 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:rdb="http://www.dangdang.com/schema/ddframe/rdb"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans.xsd">
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.dangdang.com/schema/ddframe/rdb
+                        http://www.dangdang.com/schema/ddframe/rdb/rdb.xsd">
 
-    <import resource="classpath:META-INF/sharding-jdbc.xml" />
+    <context:component-scan base-package="com.dylenfu.lightcone.persistence"/>
+
+    <!--<import resource="classpath:datasource/sharding-jdbc.xml" />-->
 
     <!--配置数据源-->
-    <bean id="dataSourceResource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
+    <bean id="masterDataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init"
           destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-
-        <!--基本属性-->
-        <property name="url" value="jdbc:mysql://127.0.0.1:3306/demodb00"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/ds_master0"/>
         <property name="username" value="root"/>
         <property name="password" value="111111"/>
 
@@ -79,18 +86,53 @@
     <!--<property name="dir" value="META-INF/druid/wall/mysql" />-->
     <!--</bean>-->
 
-    <!--整合spring与mybatis-->
-    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
-        <!--使用单一数据源-->
-        <!--<property name="dataSource" ref="dataSourceResource"/>-->
-        <!--使用多个数据源-->
-        <property name="dataSource" ref="wholeDataSource"/>
-        <property name="configLocation" value="classpath:META-INF/mybatis-config.xml"></property>
-        <property name="typeAliasesPackage" value="com.dylenfu.lightcone.persistence.entity"></property>
-        <property name="mapperLocations" value="classpath*:META-INF/mapper/UserMapper.xml"></property>
+    <bean id="ds_master0_slave0" parent="masterDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/ds_master0_slave0"/>
+        <property name="username" value="root"/>
+        <property name="password" value="111111"/>
     </bean>
+
+    <bean id="ds_master1" parent="masterDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/ds_master1"/>
+        <property name="username" value="root"/>
+        <property name="password" value="111111"/>
+    </bean>
+
+    <bean id="ds_master1_slave0" parent="masterDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://127.0.0.1:3306/ds_master1_slave0"/>
+        <property name="username" value="root"/>
+        <property name="password" value="111111"/>
+    </bean>
+
+    <rdb:master-slave-data-source id="rbb_0" master-data-source-ref="masterDataSource" slave-data-sources-ref="ds_master0_slave0"/>
+    <rdb:master-slave-data-source id="rbb_1" master-data-source-ref="ds_master1" slave-data-sources-ref="ds_master1_slave0"/>
+
+    <rdb:strategy id="databaseShardingStrategy" sharding-columns="market"
+                  algorithm-class="com.dylenfu.lightcone.persistence.sharding.DbShardingAlgorithmByMarket"/>
+    <rdb:strategy id="tableShardingStrategy" sharding-columns="address"
+                  algorithm-class="com.dylenfu.lightcone.persistence.sharding.TbShardingAlgorithmByTxFrom"/>
+
+    <rdb:data-source id="shardingDataSource">
+        <rdb:sharding-rule data-sources="rbb_0,rbb_1">
+            <rdb:table-rules>
+                <rdb:table-rule logic-table="user" actual-tables="user_${0..1}"
+                                database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy"/>
+            </rdb:table-rules>
+        </rdb:sharding-rule>
+    </rdb:data-source>
+
+    <!--mybatis配置-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        <property name="dataSource" ref="masterDataSource"/>
+        <property name="mapperLocations" value="classpath*:mybatis/*.xml"/>
+    </bean>
+
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-        <property name="basePackage" value="com.dylenfu.lightcone.persistence.mapper"></property>
+        <property name="basePackage" value="com.dylenfu.lightcone.persistence.mapper"/>
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
     </bean>
 
