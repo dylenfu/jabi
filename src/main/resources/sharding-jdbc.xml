@@ -23,11 +23,11 @@
     </bean>
 
     <!--log信息-->
-    <bean id="logFilter" class="com.alibaba.druid.filter.logging.CommonsLogFilter">
+    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Log4jFilter">
         <property name="dataSourceLogEnabled" value="true" />
-        <property name="statementExecutableSqlLogEnable" value="false"/>
-        <!--<property name="statementLogEnabled" value="false" />-->
-        <!--<property name="connectionLogEnabled" value="true" />-->
+        <property name="statementExecutableSqlLogEnable" value="true"/>
+        <property name="statementLogEnabled" value="true" />
+        <property name="connectionLogEnabled" value="true" />
     </bean>
 
     <!--配置数据源-->
