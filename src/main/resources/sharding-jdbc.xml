@@ -96,18 +96,18 @@
         <property name="password" value="111111"/>
     </bean>
 
-    <rdb:master-slave-data-source id="rbb_0" master-data-source-ref="ds_master0" slave-data-sources-ref="ds_master0_slave0"/>
-    <rdb:master-slave-data-source id="rbb_1" master-data-source-ref="ds_master1" slave-data-sources-ref="ds_master1_slave0"/>
+    <rdb:master-slave-data-source id="rbb_lrc" master-data-source-ref="ds_master0" slave-data-sources-ref="ds_master0_slave0"/>
+    <rdb:master-slave-data-source id="rbb_eth" master-data-source-ref="ds_master1" slave-data-sources-ref="ds_master1_slave0"/>
 
     <rdb:strategy id="databaseShardingStrategy" sharding-columns="market"
                   algorithm-class="com.dylenfu.lightcone.persistence.sharding.DbShardingAlgorithmByMarket"/>
     <rdb:strategy id="tableShardingStrategy" sharding-columns="address"
-                  algorithm-class="com.dylenfu.lightcone.persistence.sharding.TbShardingAlgorithmByTxFrom"/>
+                  algorithm-class="com.dylenfu.lightcone.persistence.sharding.TbShardingAlgorithmByAddress"/>
 
     <rdb:data-source id="shardingDataSource">
-        <rdb:sharding-rule data-sources="rbb_0,rbb_1">
+        <rdb:sharding-rule data-sources="rbb_lrc,rbb_eth">
             <rdb:table-rules>
-                <rdb:table-rule logic-table="user" actual-tables="user_${0..1}"
+                <rdb:table-rule logic-table="user"  actual-tables="user_a,user_b"
                                 database-strategy="databaseShardingStrategy" table-strategy="tableShardingStrategy"/>
             </rdb:table-rules>
         </rdb:sharding-rule>

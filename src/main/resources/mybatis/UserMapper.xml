@@ -16,7 +16,7 @@
     </select>
 
     <select id="selectByAge" resultType="com.dylenfu.lightcone.persistence.entity.UserEntity" parameterType="java.lang.Integer">
-        select * tx_from user where age>#{age}
+        select * from user where age>#{age}
     </select>
 
 </mapper>
