@@ -21,13 +21,15 @@ package com.dylenfu.lightcone.persistence;
 import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
 import com.dangdang.ddframe.rdb.sharding.api.strategy.table.SingleKeyTableShardingAlgorithm;
 
+import io.shardingsphere.*;
 import java.util.Collection;
 
-public class TbAlgorithm implements SingleKeyTableShardingAlgorithm<Integer> {
+// 根据地址分表
+public class TbAlgorithmByTxFrom implements SingleKeyTableShardingAlgorithm<String> {
 
     @Override
-    public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
-        int id = shardingValue.getValue();
+    public String doEqualSharding(Collection<String> availableTargetNames, ShardingValue<String> shardingValue) {
+        String from = shardingValue.getValue();
 
         int index = id % 2;
 
@@ -40,13 +42,12 @@ public class TbAlgorithm implements SingleKeyTableShardingAlgorithm<Integer> {
     }
 
     @Override
-    public Collection<String> doInSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
+    public Collection<String> doInSharding(Collection<String> availableTargetNames, ShardingValue<String> shardingValue) {
         return null;
     }
 
     @Override
-    public Collection<String> doBetweenSharding(Collection<String> availableTargetNames, ShardingValue<Integer> shardingValue) {
+    public Collection<String> doBetweenSharding(Collection<String> availableTargetNames, ShardingValue<String> shardingValue) {
         return null;
     }
 }
-

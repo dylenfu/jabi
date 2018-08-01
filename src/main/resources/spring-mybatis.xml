@@ -87,7 +87,7 @@
         <property name="dataSource" ref="wholeDataSource"/>
         <property name="configLocation" value="classpath:META-INF/mybatis-config.xml"></property>
         <property name="typeAliasesPackage" value="com.dylenfu.lightcone.persistence.entity"></property>
-        <property name="mapperLocations" value="classpath*:META-INF/mapper/*.xml"></property>
+        <property name="mapperLocations" value="classpath*:META-INF/mapper/UserMapper.xml"></property>
     </bean>
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.dylenfu.lightcone.persistence.mapper"></property>

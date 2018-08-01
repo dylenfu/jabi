@@ -7,12 +7,16 @@
         INSERT INTO user(name,age) VALUE(#{name},#{age})
     </insert>
 
-    <select id="selectByPk" resultType="com.dylenfu.lightcone.persistence.entity.UserEntity" parameterType="java.lang.Integer">
-        select * from user where id=#{id}
+    <select id="selectByMarket" resultType="com.dylenfu.lightcone.persistence.entity.UserEntity" parameterType="java.lang.String">
+        select * from user where market=#{market}
+    </select>
+
+    <select id="selectByAddress" resultType="com.dylenfu.lightcone.persistence.entity.UserEntity" parameterType="java.lang.String">
+        select * from user where address=#{address}
     </select>
 
     <select id="selectByAge" resultType="com.dylenfu.lightcone.persistence.entity.UserEntity" parameterType="java.lang.Integer">
-        select * from user where age>#{id}
+        select * tx_from user where age>#{age}
     </select>
 
 </mapper>
