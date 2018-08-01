@@ -19,7 +19,7 @@
 package com.dylenfu.lightcone.persistence.sharding;
 
 import com.dangdang.ddframe.rdb.sharding.api.ShardingValue;
-import com.dangdang.ddframe.rdb.sharding.api.strategy.database.SingleKeyDatabaseShardingAlgorithm;
+import com.dangdang.ddframe.rdb.sharding.api.strategy.table.SingleKeyTableShardingAlgorithm;
 import com.google.common.collect.Range;
 import org.springframework.stereotype.Component;
 
@@ -27,14 +27,14 @@ import java.util.Collection;
 import java.util.LinkedHashSet;
 
 @Component
-public final class DbShardingAlgorithmByMarket implements SingleKeyDatabaseShardingAlgorithm<String> {
+public final class TbShardingByAddressAlgorithm implements SingleKeyTableShardingAlgorithm<String> {
 
-    private int dbCount = 2;
+    private int tableCount = 2;
 
     @Override
     public String doEqualSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
         for (String each : availableTargetNames) {
-            if (each.endsWith(shardingValue.getValue() + "")) {
+            if (each.endsWith(shardingValue.getValue().substring(0, 1) + "")) {
                 return each;
             }
         }
@@ -43,43 +43,44 @@ public final class DbShardingAlgorithmByMarket implements SingleKeyDatabaseShard
 
     @Override
     public Collection<String> doInSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
-        Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
-        Collection<String> values = shardingValue.getValues();
-        for (String value : values) {
-            for (String dataSourceName : availableTargetNames) {
-                if (dataSourceName.endsWith(value + "")) {
-                    result.add(dataSourceName);
-                }
-            }
-        }
-        return result;
+//        Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
+//        Collection<String> values = shardingValue.getValues();
+//        for (String value : values) {
+//            for (String tableNames : availableTargetNames) {
+//                if (tableNames.endsWith(value + "")) {
+//                    result.add(tableNames);
+//                }
+//            }
+//        }
+//        return result;
+        return null;
     }
 
     @Override
     public Collection<String> doBetweenSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
-        Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
-//        Range<String> range = shardingValue.getValueRange();
-//        for (String i = range.lowerEndpoint(); i <= range.upperEndpoint(); i++) {
+//        Collection<String> result = new LinkedHashSet<>(availableTargetNames.size());
+//        Range<Integer> range = shardingValue.getValueRange();
+//        for (Integer i = range.lowerEndpoint(); i <= range.upperEndpoint(); i++) {
 //            for (String each : availableTargetNames) {
-//                if (each.endsWith(i % dbCount + "")) {
+//                if (each.endsWith(i % tableCount + "")) {
 //                    result.add(each);
 //                }
 //            }
 //        }
-        return result;
+//        return result;
+        return null;
     }
 
     /**
-     * 设置database分库的个数
-     * @param dbCount
+     * 设置分表的个数
+     *
+     * @param tableCount
      */
-    public void setDbCount(int dbCount) {
-        this.dbCount = dbCount;
+    public void setTableCount(int tableCount) {
+        this.tableCount = tableCount;
     }
 
-
-    public int getDbCount() {
-        return dbCount;
+    public int getTableCount() {
+        return tableCount;
     }
 }
-

@@ -23,9 +23,11 @@
     </bean>
 
     <!--log信息-->
-    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
+    <bean id="logFilter" class="com.alibaba.druid.filter.logging.CommonsLogFilter">
+        <property name="dataSourceLogEnabled" value="true" />
         <property name="statementExecutableSqlLogEnable" value="false"/>
-        <property name="dataSourceLogEnabled" value="false"/>
+        <!--<property name="statementLogEnabled" value="false" />-->
+        <!--<property name="connectionLogEnabled" value="true" />-->
     </bean>
 
     <!--配置数据源-->
@@ -35,38 +37,20 @@
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/ds_master0"/>
         <property name="username" value="root"/>
         <property name="password" value="111111"/>
-
-        <!-- 配置连接池初始化大小、最小、最大 -->
         <property name="initialSize" value="1"/>
         <property name="minIdle" value="1"/>
         <property name="maxActive" value="10"/>
-
-        <!-- 配置获取连接等待超时的时间,单位ms -->
         <property name="maxWait" value="6000"/>
-
-        <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位ms -->
         <property name="timeBetweenEvictionRunsMillis" value="6000"/>
-
-        <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
         <property name="minEvictableIdleTimeMillis" value="300000"/>
-        <!-- 用来检测连接是否有效的sql，要求是一个查询语句，常用select 'x'。如果validationQuery为null，testOnBorrow、testOnReturn、testWhileIdle都不会起作用-->
         <property name="validationQuery" value="SELECT 'x'"/>
         <property name="testWhileIdle" value="true"/>
         <property name="testOnBorrow" value="false"/>
         <property name="testOnReturn" value="false"/>
-
-        <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
         <property name="poolPreparedStatements" value="true"/>
         <property name="maxPoolPreparedStatementPerConnectionSize" value="50"/>
         <property name="maxOpenPreparedStatements" value="100"/>
-
-        <!--合并多个DruidDataSource的监控数据,与定期保存冲突-->
-        <property name="useGlobalDataSourceStat" value="true" />
-
-        <!--定期保存监控日志-->
-        <!--<property name="timeBetweenLogStatsMillis" value="300000" />-->
-
-        <!--filters-->
+        <property name="useGlobalDataSourceStat" value="false" />
         <property name="proxyFilters">
             <list>
                 <ref bean="statFilter"/>
@@ -76,21 +60,18 @@
     </bean>
 
     <bean id="ds_master0_slave0" parent="ds_master0">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/ds_master0_slave0"/>
         <property name="username" value="root"/>
         <property name="password" value="111111"/>
     </bean>
 
     <bean id="ds_master1" parent="ds_master0">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/ds_master1"/>
         <property name="username" value="root"/>
         <property name="password" value="111111"/>
     </bean>
 
     <bean id="ds_master1_slave0" parent="ds_master0">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://127.0.0.1:3306/ds_master1_slave0"/>
         <property name="username" value="root"/>
         <property name="password" value="111111"/>
@@ -100,9 +81,9 @@
     <rdb:master-slave-data-source id="rbb_eth" master-data-source-ref="ds_master1" slave-data-sources-ref="ds_master1_slave0"/>
 
     <rdb:strategy id="databaseShardingStrategy" sharding-columns="market"
-                  algorithm-class="com.dylenfu.lightcone.persistence.sharding.DbShardingAlgorithmByMarket"/>
+                  algorithm-class="com.dylenfu.lightcone.persistence.sharding.DbShardingByMarketAlgorithm"/>
     <rdb:strategy id="tableShardingStrategy" sharding-columns="address"
-                  algorithm-class="com.dylenfu.lightcone.persistence.sharding.TbShardingAlgorithmByAddress"/>
+                  algorithm-class="com.dylenfu.lightcone.persistence.sharding.TbShardingByAddressAlgorithm"/>
 
     <rdb:data-source id="shardingDataSource">
         <rdb:sharding-rule data-sources="rbb_lrc,rbb_eth">

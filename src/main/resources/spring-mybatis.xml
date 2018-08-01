@@ -70,9 +70,10 @@
     </bean>
 
     <!--log信息-->
-    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Slf4jLogFilter">
-        <property name="statementExecutableSqlLogEnable" value="false"/>
-        <property name="dataSourceLogEnabled" value="false"/>
+    <bean id="logFilter" class="com.alibaba.druid.filter.logging.Log4jFilter">
+        <property name="statementExecutableSqlLogEnable" value="true"/>
+        <property name="dataSourceLogEnabled" value="true"/>
+        <!--<property name="statementLogEnabled" value="false" />-->
     </bean>
 
     <!--防sql注入，貌似当前版本有点问题-->

@@ -19,8 +19,11 @@ package com.dylenfu.lightcone;
 
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
+import com.dylenfu.lightcone.persistence.entity.UserEntity;
+import com.dylenfu.lightcone.persistence.mapper.UserMapper;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import org.apache.log4j.Logger;
 
 public class Main {
 
@@ -59,5 +62,19 @@ public class Main {
 //        } finally {
 //            sqlSession.close();
 //        }
+
+        // test case3
+        Logger logger = injector.getInstance(Logger.class);
+        UserMapper mapper = injector.getInstance(UserMapper.class);
+
+        UserEntity entity1 = new UserEntity("tom", 21, "eth", "a5");
+        UserEntity entity2 = new UserEntity("tom", 21, "eth", "b5");
+        UserEntity entity3 = new UserEntity("red", 22, "lrc", "a2");
+        UserEntity entity4 = new UserEntity("red", 22, "lrc", "b2");
+
+        System.out.println(mapper.insertOne(entity1));
+        System.out.println(mapper.insertOne(entity2));
+        System.out.println(mapper.insertOne(entity3));
+        System.out.println(mapper.insertOne(entity4));
     }
 }
