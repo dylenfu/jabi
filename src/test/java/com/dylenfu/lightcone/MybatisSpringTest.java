@@ -23,6 +23,7 @@ import com.dylenfu.lightcone.persistence.mapper.UserMapper;
 import com.google.inject.Injector;
 import org.apache.log4j.Logger;
 import org.junit.Test;
+import static org.junit.Assert.*;
 
 import java.util.List;
 
@@ -57,6 +58,19 @@ public class MybatisSpringTest {
         UserMapper mapper = injector.getInstance(UserMapper.class);
 
         List<UserEntity> list = mapper.selectByAge(3);
+        for (UserEntity user: list) {
+            logger.debug(user.toString());
+        }
+    }
+
+    @Test
+    public void selectByMarket() {
+        Injector injector = Common.getInjector();
+        Logger logger = injector.getInstance(Logger.class);
+        UserMapper mapper = injector.getInstance(UserMapper.class);
+
+        List<UserEntity> list = mapper.selectByMarket("lrc");
+        assertEquals(list.size(), 2);
         for (UserEntity user: list) {
             logger.debug(user.toString());
         }

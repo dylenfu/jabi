@@ -77,12 +77,12 @@
         <property name="password" value="111111"/>
     </bean>
 
-    <bean id="randomStrategy" class="com.dangdang.ddframe.rdb.sharding.api.strategy.slave.RandomMasterSlaveLoadBalanceStrategy" />
+    <!--<bean id="randomStrategy" class="com.dangdang.ddframe.rdb.sharding.api.strategy.slave.RandomMasterSlaveLoadBalanceStrategy" />-->
     <!--<master-slave:data-source id="rbb_lrc" master-data-source-name="ds_master0" slave-data-source-names="ds_master0_slave0" strategy-ref="randomStrategy" />-->
     <!--<master-slave:data-source id="rbb_eth" master-data-source-name="ds_master0" slave-data-source-names="ds_master0_slave0" strategy-ref="randomStrategy" />-->
 
-    <rdb:master-slave-data-source id="rbb_lrc" master-data-source-ref="ds_master0" slave-data-sources-ref="ds_master0_slave0" strategy-ref="randomStrategy"/>
-    <rdb:master-slave-data-source id="rbb_eth" master-data-source-ref="ds_master1" slave-data-sources-ref="ds_master1_slave0" strategy-ref="randomStrategy"/>
+    <rdb:master-slave-data-source id="rbb_lrc" master-data-source-ref="ds_master0" slave-data-sources-ref="ds_master0_slave0"/>
+    <rdb:master-slave-data-source id="rbb_eth" master-data-source-ref="ds_master1" slave-data-sources-ref="ds_master1_slave0"/>
 
     <rdb:strategy id="databaseShardingStrategy" sharding-columns="market"
                   algorithm-class="com.dylenfu.lightcone.persistence.sharding.DbShardingByMarketAlgorithm"/>

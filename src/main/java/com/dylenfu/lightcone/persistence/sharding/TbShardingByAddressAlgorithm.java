@@ -33,6 +33,7 @@ public final class TbShardingByAddressAlgorithm implements SingleKeyTableShardin
 
     @Override
     public String doEqualSharding(final Collection<String> availableTargetNames, final ShardingValue<String> shardingValue) {
+        String t = "1";
         for (String each : availableTargetNames) {
             if (each.endsWith(shardingValue.getValue().substring(0, 1) + "")) {
                 return each;
