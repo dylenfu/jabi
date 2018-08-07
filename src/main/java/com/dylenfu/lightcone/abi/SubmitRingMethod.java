@@ -126,8 +126,8 @@ public class SubmitRingMethod {
             logger.debug("submit ring method input:" + param.name + " "+ param.type);
         }
 
-        logger.debug("------before decode");
         logger.debug("input " + Hex.toHexString(input));
+
         List list = method.decode(input);
 
         //logger.debug("submit ring method feeReceipt " + Hex.toHexString((byte[]) list.get(7)));
