@@ -124,9 +124,10 @@ public abstract class SolidityType {
         /**
          * ArrayType
          * @param name 如address[4][]
-         * @desc 修改
-         *      int idx = name.lastIndexOf("[");
-         *      int idx2 = name.lastIndexOf("]", idx);
+         * @desc 过程:
+         * 1.先从第一个"["之前获得address作为子元素名称前缀
+         * 2.然后判断第一个"]"还有没有其他数组符号,如果有则使用[4]作为子元素名称后缀
+         * 3.如果是多维数组那么每次传进来的name都会减少一个维度
          */
         public ArrayType(String name) {
             super(name);
