@@ -220,6 +220,57 @@ public abstract class SolidityType {
         }
 
         @Override
+        /**
+         * @name decode
+         * @input byte[] encoed
+         * @input int origOffset
+         * @return null
+         * @desc 所有动态数组都有offset,跟随input所在顺序
+         *       如下为submitRing的input参数,按照32byte切分后得到的数据,
+         *       index:0为addressList [][4]common.Address在input中的offset,0x120->288,
+         *       查找到index:288为2,这个2代表该动态数组里有两个元素,元素为address[4]的静态数组
+         *       index:320~index:544为对应的address地址
+         *       此外,即便是一维的动态数组,同样包含offset,我们可以参考0x协议对应的function中包含的v,s,r:
+         *       https://etherscan.io/tx/0xe393b6654bc465c90b0e8cdf1e44faf40aadcb550b3f724af64e7a55f9506dab
+         *       一维的静态数组不包含offset,这里我们可以参考0x协议中对应的tx:
+         *       https://etherscan.io/tx/0x445817421ee7cf8ad7cc2b1c33f7c0199c15d8834f67e381b067787230f36875
+         *       总结:
+         *       动态数组包含offset,静态数组只包含size
+         *
+         *  type SubmitRingMethodInputs struct {
+         * 	    AddressList        [][4]common.Address `fieldName:"addressList" fieldId:"0"`   // owner,tokenS, wallet, authAddress
+         * 	    UintArgsList       [][6]*big.Int       `fieldName:"uintArgsList" fieldId:"1"`  // amountS, amountB, validSince (second),validUntil (second), lrcFee, rateAmountS.
+         * 	    Uint8ArgsList      [][1]uint8          `fieldName:"uint8ArgsList" fieldId:"2"` // marginSplitPercentageList
+         * 	    BuyNoMoreThanBList []bool              `fieldName:"buyNoMoreThanAmountBList" fieldId:"3"`
+         * 	    VList              []uint8             `fieldName:"vList" fieldId:"4"`
+         * 	    RList              [][32]byte          `fieldName:"rList" fieldId:"5"`
+         * 	    SList              [][32]byte          `fieldName:"sList" fieldId:"6"`
+         * 	    FeeRecipient       common.Address      `fieldName:"feeRecipient" fieldId:"7"`
+         * 	    FeeSelections      uint16              `fieldName:"feeSelections" fieldId:"8"`
+         * 	    Protocol           common.Address
+         * 	    FeeReceipt         common.Address
+         *  }
+         *
+         *  unpack_test.go:70: index:0 -> 0x0000000000000000000000000000000000000000000000000000000000000120
+         * 	unpack_test.go:70: index:32 -> 0x0000000000000000000000000000000000000000000000000000000000000240
+         * 	unpack_test.go:70: index:64 -> 0x00000000000000000000000000000000000000000000000000000000000003e0
+         * 	unpack_test.go:70: index:96 -> 0x0000000000000000000000000000000000000000000000000000000000000440
+         * 	unpack_test.go:70: index:128 -> 0x00000000000000000000000000000000000000000000000000000000000004a0
+         * 	unpack_test.go:70: index:160 -> 0x0000000000000000000000000000000000000000000000000000000000000540
+         * 	unpack_test.go:70: index:192 -> 0x00000000000000000000000000000000000000000000000000000000000005e0
+         * 	unpack_test.go:70: index:224 -> 0x000000000000000000000000b94065482ad64d4c2b9252358d746b39e820a582
+         * 	unpack_test.go:70: index:256 -> 0x0000000000000000000000000000000000000000000000000000000000000000
+         * 	unpack_test.go:70: index:288 -> 0x0000000000000000000000000000000000000000000000000000000000000002
+         * 	unpack_test.go:70: index:320 -> 0x000000000000000000000000f1bd6422e4420cfd9759f660d739d102328187a5
+         * 	unpack_test.go:70: index:352 -> 0x000000000000000000000000ef68e7c694f40c8202821edf525de3782458639f
+         * 	unpack_test.go:70: index:384 -> 0x000000000000000000000000b94065482ad64d4c2b9252358d746b39e820a582
+         * 	unpack_test.go:70: index:416 -> 0x0000000000000000000000008c4f5e19695fbbfd92d027c1d9ef35a296d539c9
+         * 	unpack_test.go:70: index:448 -> 0x000000000000000000000000a3ae668b6239fa3eb1dc26daabb03f244d0259f0
+         * 	unpack_test.go:70: index:480 -> 0x000000000000000000000000c02aaa39b223fe8d0a0e5c4f27ead9083c756cc2
+         * 	unpack_test.go:70: index:512 -> 0x000000000000000000000000b94065482ad64d4c2b9252358d746b39e820a582
+         * 	unpack_test.go:70: index:544 -> 0x000000000000000000000000dd859de34ff674050b4961aa51aa74467cb0f03a
+         * 	......
+         */
         public Object decode(byte[] encoded, int origOffset) {
             int len = IntType.decodeInt(encoded, origOffset).intValue();
             origOffset += 32;
