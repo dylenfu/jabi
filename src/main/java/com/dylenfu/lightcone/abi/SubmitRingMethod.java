@@ -113,6 +113,8 @@ public class SubmitRingMethod {
         if (this.method == null) {
             this.method = abi.findFunction(methodName);
         }
+
+        addressList = new ArrayList<byte[]>();
     }
 
     private void afterUnpack() throws Exception {
@@ -121,17 +123,17 @@ public class SubmitRingMethod {
 
     public void unpack() throws Exception {
         beforeUnpack();
-
-        for (Abi.Entry.Param param : method.inputs) {
-            logger.debug("submit ring method input:" + param.name + " "+ param.type);
-        }
-
-        logger.debug("input " + Hex.toHexString(input));
-
         List list = method.decode(input);
 
-        //logger.debug("submit ring method feeReceipt " + Hex.toHexString((byte[]) list.get(7)));
-        logger.debug("submit ring method objects length:" + list.get(0).toString());
+        logger.debug("submit ring method objects length:" + list.toArray().length);
+
+        for (Object arr: (Object[]) list.get(0)) {
+            for (Object object: (Object[]) arr) {
+                addressList.add((byte[])object);
+                logger.debug("submitRing address " + Hex.toHexString(addressList.get(addressList.toArray().length - 1)));
+            }
+        }
+
         //Object[] objects = (Object[])list.get(0);
     }
 }
