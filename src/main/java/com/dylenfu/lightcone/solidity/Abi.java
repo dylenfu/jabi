@@ -48,9 +48,9 @@ public class Abi extends ArrayList<Abi.Entry> {
             .disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES)
             .enable(DeserializationFeature.READ_UNKNOWN_ENUM_VALUES_AS_NULL);
 
-    public static org.ethereum.solidity.Abi fromJson(String json) {
+    public static Abi fromJson(String json) {
         try {
-            return DEFAULT_MAPPER.readValue(json, org.ethereum.solidity.Abi.class);
+            return DEFAULT_MAPPER.readValue(json, Abi.class);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

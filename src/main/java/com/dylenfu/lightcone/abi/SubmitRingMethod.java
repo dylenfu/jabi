@@ -21,7 +21,7 @@ import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.commons.collections4.Predicate;
 import org.apache.log4j.Logger;
-import org.ethereum.solidity.Abi;
+import com.dylenfu.lightcone.solidity.Abi;
 import org.spongycastle.util.encoders.Hex;
 
 import java.math.BigInteger;

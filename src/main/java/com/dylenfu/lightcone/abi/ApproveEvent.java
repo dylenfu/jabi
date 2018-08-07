@@ -21,7 +21,7 @@ package com.dylenfu.lightcone.abi;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 import org.apache.log4j.Logger;
-import org.ethereum.solidity.Abi;
+import com.dylenfu.lightcone.solidity.Abi;
 
 public class ApproveEvent {
 

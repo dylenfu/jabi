@@ -25,11 +25,11 @@ import com.dylenfu.lightcone.abi.TransferEvent;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
 import com.dylenfu.lightcone.persistence.mapper.UserMapper;
+import com.dylenfu.lightcone.solidity.Abi;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.ethereum.solidity.Abi;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
