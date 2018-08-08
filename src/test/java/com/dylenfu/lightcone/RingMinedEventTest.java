@@ -1,4 +1,4 @@
-package com.dylenfu.lightcone;/*
+/*
 
   Copyright 2017 Loopring Project Ltd (Loopring Foundation).
 
@@ -15,6 +15,8 @@ package com.dylenfu.lightcone;/*
   limitations under the License.
 
 */
+
+package com.dylenfu.lightcone;
 
 import com.dylenfu.lightcone.abi.RingMinedEvent;
 import com.google.inject.Injector;
