@@ -18,10 +18,7 @@
 
 package com.dylenfu.lightcone;
 
-import com.dylenfu.lightcone.abi.ApproveMethod;
-import com.dylenfu.lightcone.abi.CancelOrderMethod;
-import com.dylenfu.lightcone.abi.SubmitRingMethod;
-import com.dylenfu.lightcone.abi.TransferEvent;
+import com.dylenfu.lightcone.abi.*;
 import com.dylenfu.lightcone.config.NodeConfig;
 import com.dylenfu.lightcone.config.StaticConfig;
 import com.dylenfu.lightcone.persistence.mapper.UserMapper;
@@ -69,6 +66,7 @@ public class MainModule extends AbstractModule {
         bind(Abi.class).annotatedWith(Names.named("implAbi")).toInstance(implAbi);
         bind(SubmitRingMethod.class).toInstance(new SubmitRingMethod());
         bind(CancelOrderMethod.class).toInstance(new CancelOrderMethod());
+        bind(RingMinedEvent.class).toInstance(new RingMinedEvent());
 
         // load mybatis-spring
         ApplicationContext context = new ClassPathXmlApplicationContext(staticConfig.config.getString("db.config"));
