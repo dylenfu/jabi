@@ -61,7 +61,7 @@ public class SubmitRingMethod {
         this.input = input;
     }
 
-    private List<byte[]> addressList;
+    private List<List<byte[]>> addressList;
     private List<BigInteger[]> uintArgsList;
     private List<BigInteger[]> uint8ArgsList;
     private boolean[] buyNoMoreThanBList;
@@ -71,40 +71,76 @@ public class SubmitRingMethod {
     private byte[] feeRecipient;
     private BigInteger feeSelections;
 
-    public List<byte[]> getAddressList() {
+    public List<List<byte[]>> getAddressList() {
         return addressList;
+    }
+
+    public void setAddressList(List<List<byte[]>> addressList) {
+        this.addressList = addressList;
     }
 
     public List<BigInteger[]> getUintArgsList() {
         return uintArgsList;
     }
 
+    public void setUintArgsList(List<BigInteger[]> uintArgsList) {
+        this.uintArgsList = uintArgsList;
+    }
+
     public List<BigInteger[]> getUint8ArgsList() {
         return uint8ArgsList;
+    }
+
+    public void setUint8ArgsList(List<BigInteger[]> uint8ArgsList) {
+        this.uint8ArgsList = uint8ArgsList;
     }
 
     public boolean[] getBuyNoMoreThanBList() {
         return buyNoMoreThanBList;
     }
 
+    public void setBuyNoMoreThanBList(boolean[] buyNoMoreThanBList) {
+        this.buyNoMoreThanBList = buyNoMoreThanBList;
+    }
+
     public List<BigInteger> getvList() {
         return vList;
+    }
+
+    public void setvList(List<BigInteger> vList) {
+        this.vList = vList;
     }
 
     public List<byte[]> getrList() {
         return rList;
     }
 
+    public void setrList(List<byte[]> rList) {
+        this.rList = rList;
+    }
+
     public List<byte[]> getsList() {
         return sList;
+    }
+
+    public void setsList(List<byte[]> sList) {
+        this.sList = sList;
     }
 
     public byte[] getFeeRecipient() {
         return feeRecipient;
     }
 
+    public void setFeeRecipient(byte[] feeRecipient) {
+        this.feeRecipient = feeRecipient;
+    }
+
     public BigInteger getFeeSelections() {
         return feeSelections;
+    }
+
+    public void setFeeSelections(BigInteger feeSelections) {
+        this.feeSelections = feeSelections;
     }
 
     Predicate<Abi.Function> methodName = x -> x.name.equals("submitRing");
@@ -114,7 +150,7 @@ public class SubmitRingMethod {
             this.method = abi.findFunction(methodName);
         }
 
-        addressList = new ArrayList<byte[]>();
+        addressList = new ArrayList<List<byte[]>>();
         uintArgsList = new ArrayList<BigInteger[]>();
         uint8ArgsList = new ArrayList<BigInteger[]>();
         buyNoMoreThanBList = new boolean[2];
@@ -134,10 +170,13 @@ public class SubmitRingMethod {
         logger.debug("submit ring method objects length:" + list.toArray().length);
 
         for (Object arr: (Object[]) list.get(0)) {
+            List subAddressList = new ArrayList<byte[]>();
             for (Object object: (Object[]) arr) {
-                addressList.add((byte[])object);
-                logger.debug("submitRing address " + Hex.toHexString(addressList.get(addressList.toArray().length - 1)));
+                byte[] address = (byte[])object;
+                subAddressList.add(address);
+                logger.debug("submitRing address " + Hex.toHexString(address));
             }
+            addressList.add(subAddressList);
         }
 
         for (Object arr: (Object[]) list.get(1)) {
@@ -186,5 +225,9 @@ public class SubmitRingMethod {
 
         feeSelections = (BigInteger) list.get(8);
         logger.debug("submitRing feeSelections " + feeSelections.toString());
+    }
+
+    public byte[] pack() {
+        return method.encode(addressList, uintArgsList, uint8ArgsList, buyNoMoreThanBList, vList, rList, sList, feeRecipient, feeSelections);
     }
 }
