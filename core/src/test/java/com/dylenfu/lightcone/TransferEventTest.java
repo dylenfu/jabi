@@ -29,7 +29,6 @@ public class TransferEventTest {
 
     @Test
     public void unpackTest() {
-
         Injector injector =  Common.getInjector();
 
         byte[] data = Hex.decode("000000000000000000000000000000000000000000000000016345785d8a0000");

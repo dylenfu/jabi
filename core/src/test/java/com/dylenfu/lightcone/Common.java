@@ -26,7 +26,7 @@ import com.google.inject.Injector;
 public class Common {
 
     public static Injector getInjector() {
-        StaticConfig staticConfig = new StaticConfig("/Users/fukun/projects/javahome/github.com/dylenfu/lightcone/src/main/resources/local.conf");
+        StaticConfig staticConfig = new StaticConfig("/Users/fukun/projects/javahome/github.com/dylenfu/lightcone/core/src/main/resources/local.conf");
         staticConfig.parse();
         NodeConfig nodeConfig = new NodeConfig();
 
