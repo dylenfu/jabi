@@ -28,7 +28,7 @@ import org.apache.log4j.Logger;
 public class Main {
 
     public static void main(String[] args) {
-        StaticConfig staticConfig = new StaticConfig("/Users/fukun/projects/javahome/github.com/dylenfu/lightcone/core/src/main/resources/local.conf");
+        StaticConfig staticConfig = new StaticConfig("/Users/fukun/projects/javahome/github.com/dylenfu/lightcone/src/main/resources/local.conf");
         staticConfig.parse();
         NodeConfig nodeConfig = new NodeConfig();
 
